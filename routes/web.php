@@ -18,3 +18,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Users Rote Only For Admin
+Route::resource('users', 'AdminUsersController');
+
+Route::post('users/{user}/makeActive', 'AdminUsersController@makeActive')->name('users.makeActive');
+
+Route::post('users/{user}/makeInactive', 'AdminUsersController@makeInactive')->name('users.makeInactive');
