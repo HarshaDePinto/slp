@@ -25,3 +25,7 @@ Route::resource('users', 'AdminUsersController');
 Route::post('users/{user}/makeActive', 'AdminUsersController@makeActive')->name('users.makeActive');
 
 Route::post('users/{user}/makeInactive', 'AdminUsersController@makeInactive')->name('users.makeInactive');
+
+Route::get('users/{user}/changePassword', 'AdminUsersController@changePassword')->name('users.changePassword');
+
+Route::put('users/{user}/editlogin', 'AdminUsersController@editlogin')->name('users.editlogin');

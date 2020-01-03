@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditloginRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
 use App\Image;
@@ -46,9 +48,9 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.single')->with('user', $user);
     }
 
     /**
@@ -117,5 +119,24 @@ class AdminUsersController extends Controller
         session()->flash('success', 'User Inactivate Successfully!');
 
         return redirect(route('users.index'));
+    }
+
+    public function changePassword(User $user)
+    {
+        return view('users.editlogin')->with('user', $user);
+    }
+
+    public function editlogin(EditloginRequest $request, User $user)
+    {
+
+        $input = $request->all();
+
+        $password = Hash::make($input['password']);
+
+        $input['password'] = $password;
+
+        $user->update($input);
+
+        return redirect(route('home'));
     }
 }

@@ -27,7 +27,7 @@
     <div class="mb-4">
 
         <h2 class="text-success text-center">
-            {{'Well Come '.$user->name}}
+            {{'Edit Profile '.$user->name}}
 
         </h2></div>
 
@@ -80,7 +80,11 @@
 
 
     <div class="form-group">
-        <img class="mr-3" width="200" src="" alt="Generic placeholder image">
+        @if ($user->image)
+                <img class="mr-3" width="200" src="{{ asset('images/'.$user->image->path) }}" alt="No Image">
+                @else
+                {{'No Image'}}
+                @endif
     </div>
 
 
