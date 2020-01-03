@@ -19,6 +19,7 @@
 
     <a href="{{route('users.changePassword',$user->id)}}" class="btn btn-info btn-sm text-white">Change Login</a>
 
+
 </h2>
   <h5 class="mt-0 "><span class="text-info">Email: </span>{{$user->email}}</h5>
   <h5 class="mt-0 "><span class="text-info">ID: </span>{{$user->nic}}</h5>

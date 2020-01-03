@@ -78,6 +78,19 @@
     <trix-editor input="emergency"></trix-editor>
     </div>
 
+    @if (Auth::user()->role_id==1)
+    <div class="form-group">
+        <label class="font-weight-bold" for="note"> Note</label>
+        <input id="note" type="hidden" name="note" value="{{$user->note}}">
+        <trix-editor input="note"></trix-editor>
+        </div>
+
+        <div class="form-group">
+            <label class="font-weight-bold" for="complain"> Complain</label>
+            <input id="complain" type="hidden" name="complain" value="{{$user->complain}}">
+            <trix-editor input="complain"></trix-editor>
+            </div>
+    @endif
 
     <div class="form-group">
         @if ($user->image)
