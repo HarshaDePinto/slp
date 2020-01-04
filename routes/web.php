@@ -29,3 +29,8 @@ Route::post('users/{user}/makeInactive', 'AdminUsersController@makeInactive')->n
 Route::get('users/{user}/changePassword', 'AdminUsersController@changePassword')->name('users.changePassword');
 
 Route::put('users/{user}/editlogin', 'AdminUsersController@editlogin')->name('users.editlogin');
+
+
+//vehicle
+
+Route::resource('vehicles', 'VehiclesController');

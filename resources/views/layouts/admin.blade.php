@@ -89,26 +89,9 @@
 
         <section class="py-2   bg-light">
             <div class="container">
-              <div class="row ">
-                <div class="col-md-3 mb-2">
-                  <a href="" class="btn btn-primary btn-block dropdown">
-                  <i class="fas fa-plus"></i> Add Vehicale</a>
-                </div>
-                <div class="col-md-3 mb-2">
-                  <a href="" class="btn btn-success btn-block">
-                  <i class="fas fa-plus"></i> Add Drivers</a>
-                </div>
-                <div class="col-md-3 mb-2">
-                  <a href="tours.php?source=add_tour" class="btn btn-warning btn-block">
-                  <i class="fas fa-plus"></i> Add Tours</a>
-                </div>
-                <div class="col-md-3 mb-2">
-                  <a href="duty.php?source=add_duty" class="btn btn-dark btn-block">
-                  <i class="fas fa-plus"></i> Add Duty</a>
-                </div>
-              </div>
 
-              <div class="row ">
+             @if (Auth::user()->role_id==1)
+             <div class="row ">
                 <div class="col-md-3 mb-2">
                   <a href="{{route('users.index')}}"  style="background-color:#39CCCC;" class="btn btn-block  text-white" >
                     <i class="fas fa-user"></i> USERS</a>
@@ -126,6 +109,34 @@
                   <i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 </div>
               </div>
+             @endif
+
+
+@if (Auth::user()->role_id==2)
+<div class="row ">
+    <div class="col-md-3 mb-2">
+      <a href="" class="btn btn-primary btn-block dropdown">
+      <i class="fas fa-plus"></i> Add Vehicale</a>
+    </div>
+    <div class="col-md-3 mb-2">
+      <a href="" class="btn btn-success btn-block">
+      <i class="fas fa-plus"></i> Add Drivers</a>
+    </div>
+    <div class="col-md-3 mb-2">
+      <a href="tours.php?source=add_tour" class="btn btn-warning btn-block">
+      <i class="fas fa-plus"></i> Add Tours</a>
+    </div>
+    <div class="col-md-3 mb-2">
+      <a href="duty.php?source=add_duty" class="btn btn-dark btn-block">
+      <i class="fas fa-plus"></i> Add Duty</a>
+    </div>
+  </div>
+@endif
+
+
+
+
+
             </div>
 
 
@@ -134,6 +145,13 @@
             <section>
                 <div class="container">
                 <div class="row">
+
+
+                    <div class="col-md-3 mb-5">
+
+                        @yield('option')
+                    </div>
+
 
                     <div class="col-md-9">
 
@@ -144,74 +162,6 @@
                     @endif
                         @yield('content')
 
-                    </div>
-
-                    <div class="col-md-3 mb-5">
-                        <div class="card text-center bg-primary text-white mb-3">
-
-                            <div class="card-body">
-                            <h3>Vehical</h3>
-                            <h4 class="display-4">
-                            <i class="fas fa-car"></i></h4>
-                            <h5 class="d-inline">
-
-
-                          </h5>
-                        <a href="" class="btn btn-outline-light btn-sm">View</a>
-                            </div>
-
-                          </div>
-
-                          <div class="card text-center bg-success text-white mb-3">
-
-                            <div class="card-body">
-                            <h3>Drivers</h3>
-                            <h4 class="display-4"><i class="fas fa-user-tie"></i></h4>
-                            <h5 class="d-inline">
-
-
-                          </h5>
-                            <a href="" class="btn btn-outline-light btn-sm">View</a>
-                            </div>
-
-                          </div>
-
-                          <div class="card text-center bg-warning text-white mb-3">
-
-                            <div class="card-body">
-                            <h3>Tours</h3>
-                            <h4 class="display-4">
-                            <i class="fas fa-map-marker-alt"></i></h4>
-                            <h5 class="d-inline">
-
-
-                          </h5>
-                            <a href="tours.php" class="btn btn-outline-light btn-sm">View</a>
-                            </div>
-
-
-
-
-                          </div>
-
-
-                          <div class="card text-center bg-dark text-white mb-3">
-
-                            <div class="card-body">
-                            <h3>Duties</h3>
-                            <h4 class="display-4">
-                            <i class="far fa-bell"></i></h4>
-                            <h5 class="d-inline">
-
-
-                          </h5>
-                            <a href="duty.php" class="btn btn-outline-light btn-sm">View</a>
-                            </div>
-
-
-
-
-                          </div>
                     </div>
 
                 </div>
