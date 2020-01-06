@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Event;
+use App\Duty;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::get($columns1);
+        $bookings1 = $allBookings1->toJson();
+
+        return view('home', compact('bookings1'));
     }
 }

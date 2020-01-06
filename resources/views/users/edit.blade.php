@@ -3,6 +3,16 @@
 @section('css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css" rel="stylesheet">
 @endsection
+
+@section('option')
+
+
+<a href="{{route('users.edit',$user->id)}}" class="btn btn-info btn-block  text-white" >
+    <i class="fas fa-edit"></i>Edit User</a>
+
+<a href="{{route('users.changePassword',$user->id)}}" class="btn btn-info btn-block  text-white" >
+    <i class="fas fa-key"></i></i>Change Password</a>
+@endsection
 @section('content')
 
 <form action="{{route('users.update',$user->id)}}" method="POST" enctype="multipart/form-data" class="mb-5">

@@ -1,5 +1,13 @@
 @extends('layouts.admin')
 
+@section('option')
+<a href="{{route('users.edit',$user->id)}}" class="btn btn-info btn-block  text-white" >
+    <i class="fas fa-edit"></i>Edit User</a>
+
+<a href="{{route('users.changePassword',$user->id)}}" class="btn btn-info btn-block  text-white" >
+    <i class="fas fa-key"></i></i>Change Password</a>
+@endsection
+
 @section('content')
 
 <div class="media">

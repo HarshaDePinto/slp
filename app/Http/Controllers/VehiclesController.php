@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateVehicleRequest;
 use Illuminate\Http\Request;
+use App\Vehicle;
+use App\Image;
+use App\Duty;
+use Carbon\Carbon;
 
 class VehiclesController extends Controller
 {
@@ -13,7 +18,10 @@ class VehiclesController extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::all();
+        $duties = Duty::all();
+
+        return view('vehicles.index', compact('vehicles', 'duties'));
     }
 
     /**
@@ -23,7 +31,7 @@ class VehiclesController extends Controller
      */
     public function create()
     {
-        //
+        return view('vehicles.create');
     }
 
     /**
@@ -32,9 +40,22 @@ class VehiclesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateVehicleRequest $request)
     {
-        //
+        $input = $request->all();
+        if ($file = $request->file('image_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+
+            $image = Image::create(['path' => $name]);
+
+            $input['image_id'] = $image->id;
+        }
+
+        Vehicle::create($input);
+        session()->flash('success', 'Vehicle Added Successfully!');
+
+        return redirect(route('vehicles.index'));
     }
 
     /**
@@ -43,9 +64,18 @@ class VehiclesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Vehicle $vehicle)
     {
-        //
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('vehicle_id', $vehicle->id)->get($columns1);
+        $bookings1 = $allBookings1->toJson();
+
+        return view('vehicles.single', compact('bookings1', 'vehicle'));
     }
 
     /**
@@ -80,5 +110,25 @@ class VehiclesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function makeUnavailable(Vehicle $vehicle)
+    {
+        $vehicle->status = 0;
+        $vehicle->save();
+
+        session()->flash('success', 'Vehicle Make Unavailable Successfully!');
+
+        return redirect(route('vehicles.index'));
+    }
+
+    public function makeAvailable(Vehicle $vehicle)
+    {
+        $vehicle->status = 1;
+        $vehicle->save();
+
+        session()->flash('success', 'Vehicle Make Available Successfully!');
+
+        return redirect(route('vehicles.index'));
     }
 }

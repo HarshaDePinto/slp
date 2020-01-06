@@ -34,3 +34,20 @@ Route::put('users/{user}/editlogin', 'AdminUsersController@editlogin')->name('us
 //vehicle
 
 Route::resource('vehicles', 'VehiclesController');
+
+
+Route::post('vehicles/{vehicle}/makeUnavailable', 'VehiclesController@makeUnavailable')->name('vehicles.makeUnavailable');
+
+Route::post('vehicles/{vehicle}/makeAvailable', 'VehiclesController@makeAvailable')->name('vehicles.makeAvailable');
+
+
+
+
+
+
+
+//tour
+Route::resource('tours', 'TourController');
+
+//agreements
+Route::resource('agreement', 'AgreementController');

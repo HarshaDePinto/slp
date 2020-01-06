@@ -13,6 +13,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -28,6 +29,22 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/mycss.css') }}" rel="stylesheet">
     @yield('css')
+
+    <style>
+
+        body {
+          margin: 40px 10px;
+          padding: 0;
+          font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+          font-size: 14px;
+        }
+
+        #calendar {
+          max-width: 900px;
+          margin: 0 auto;
+        }
+
+      </style>
 </head>
 <body>
 
@@ -97,12 +114,12 @@
                     <i class="fas fa-user"></i> USERS</a>
                 </div>
                 <div class="col-md-3 mb-2">
-                  <a href="drivers.php?source=add_driver" style="background-color:#FF851B;" class="btn text-white  btn-block" data-toggle="modal" data-target="#maintenance">
-                  <i class="fas fa-wrench"></i> MAINTENANCE</a>
+                  <a href="{{route('vehicles.index')}}" style="background-color:#FF851B;" class="btn text-white  btn-block">
+                  <i class="fas fa-car"></i> Vehicles</a>
                 </div>
                 <div class="col-md-3 mb-2">
-                  <a href="tours.php?source=finance" class="btn btn-warning btn-block">
-                  <i class="fas fa-hand-holding-usd"></i> Finance</a>
+                  <a href="{{route('tours.index')}}" class="btn btn-warning btn-block">
+                  <i class="fas fa-hand-holding-usd"></i> Tours</a>
                 </div>
                 <div class="col-md-3 mb-2">
                   <a href="{{ url('/home') }}" class="btn btn-dark btn-block">

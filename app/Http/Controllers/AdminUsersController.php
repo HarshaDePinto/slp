@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
 use App\Image;
+use App\Duty;
 
 class AdminUsersController extends Controller
 {
@@ -50,7 +51,16 @@ class AdminUsersController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.single')->with('user', $user);
+
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('user_id', $user->id)->get($columns1);
+        $bookings1 = $allBookings1->toJson();
+        return view('users.single', compact('bookings1', 'user'));
     }
 
     /**
@@ -87,7 +97,9 @@ class AdminUsersController extends Controller
         }
 
         $user->update($input);
-        return redirect(route('home'));
+
+
+        return redirect(route('users.index'));
     }
 
     /**

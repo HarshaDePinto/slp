@@ -8,7 +8,7 @@
   <button style="background-color:#39CCCC;" class="btn btn-block  text-white" onclick="show('operation3')">Cliant</button>
 
 
-  <div id=operation1 style="display:none">
+  <div id="operation1" style="display:none">
     <table class="table table-hover">
         <thead>
           <tr>
@@ -87,7 +87,7 @@
 
 
 
-  <div id=operation2 style="display:none">
+  <div id="operation2" style="display:none">
 
     <table class="table table-hover">
         <thead>
@@ -165,7 +165,7 @@
 
   </div>
 
-  <div id=operation3 style="display:none">
+  <div id="operation3" style="display:none">
     <table class="table table-hover">
         <thead>
           <tr>
