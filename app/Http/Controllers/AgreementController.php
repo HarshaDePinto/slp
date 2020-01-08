@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Agreement;
+use App\Duty;
+use App\User;
+use App\Vehicle;
+use App\Finance;
 use Illuminate\Http\Request;
 
 class AgreementController extends Controller
@@ -46,7 +50,11 @@ class AgreementController extends Controller
      */
     public function show($id)
     {
-        //
+        $tour = Duty::findOrFail($id);
+        $vehicle = Vehicle::findOrFail($tour->vehicle_id);
+        $agreement = Agreement::findOrFail($tour->agreement_id);
+        $driver = User::findOrFail($tour->user_id);
+        return view('agreement.index', compact('tour', 'vehicle', 'driver', 'agreement'));
     }
 
     /**
@@ -55,9 +63,13 @@ class AgreementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agreement $agreement)
+    public function edit($id)
     {
-        return view('agreement.edit')->with('agreement', $agreement);
+        $tour = Duty::findOrFail($id);
+        $vehicle = Vehicle::findOrFail($tour->vehicle_id);
+        $agreement = Agreement::findOrFail($tour->agreement_id);
+        $driver = User::findOrFail($tour->user_id);
+        return view('agreement.edit', compact('tour', 'vehicle', 'driver', 'agreement'));
     }
 
     /**

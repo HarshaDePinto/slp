@@ -49,5 +49,9 @@ Route::post('vehicles/{vehicle}/makeAvailable', 'VehiclesController@makeAvailabl
 //tour
 Route::resource('tours', 'TourController');
 
+Route::post('tours/{tour}/makeConfirm', 'TourController@makeConfirm')->name('tours.makeConfirm');
+
+Route::post('tours/{tour}/makePending', 'TourController@makePending')->name('tours.makePending');
+
 //agreements
 Route::resource('agreement', 'AgreementController');

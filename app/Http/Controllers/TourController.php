@@ -9,7 +9,7 @@ use App\Duty;
 use App\User;
 use App\Vehicle;
 use App\Finance;
-use Carbon\Carbon;
+
 
 class TourController extends Controller
 {
@@ -21,8 +21,11 @@ class TourController extends Controller
     public function index()
     {
         $tours = Duty::orderBy('start', 'ASC')->get();
+        $agreements = Agreement::all();
+        $vehicles = Vehicle::all();
+        $drivers = User::all();
 
-        return view('tours.index', compact('tours'));
+        return view('tours.index', compact('tours', 'agreements', 'vehicles', 'drivers'));
     }
 
     /**
@@ -100,10 +103,31 @@ class TourController extends Controller
      */
     public function show($id)
     {
+
         $tour = Duty::findOrFail($id);
         $vehicle = Vehicle::findOrFail($tour->vehicle_id);
+        $agreement = Agreement::findOrFail($tour->agreement_id);
         $driver = User::findOrFail($tour->user_id);
-        return view('tours.single', compact('tour', 'vehicle', 'driver'));
+
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('vehicle_id', $vehicle->id)->get($columns1);
+        $bookingsv = $allBookings1->toJson();
+
+        $columns2 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('user_id', $driver->id)->get($columns2);
+        $bookingsd = $allBookings1->toJson();
+
+        return view('tours.single', compact('tour', 'vehicle', 'driver', 'agreement', 'bookingsv', 'bookingsd'));
     }
 
     /**
@@ -132,7 +156,8 @@ class TourController extends Controller
         $tour = Duty::findOrFail($id);
         $input = $request->all();
         $tour->update($input);
-        return redirect(route('tours.index'));
+        session()->flash('success', $tour->title . ' UpdatedSuccessfully!');
+        return redirect(route('tours.show', $tour->id));
     }
 
     /**
@@ -144,5 +169,26 @@ class TourController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function makeConfirm($id)
+    {
+        $tour = Duty::findOrFail($id);
+        $tour->status = 1;
+        $tour->save();
+
+        session()->flash('success', 'Tour Confirm Successfully!');
+
+        return redirect(route('tours.index'));
+    }
+
+    public function makePending($id)
+    {
+        $tour = Duty::findOrFail($id);
+        $tour->status = 0;
+        $tour->save();
+
+        session()->flash('success', 'Tour Make Pending Successfully!');
+
+        return redirect(route('tours.index'));
     }
 }
