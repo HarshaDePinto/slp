@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expense extends Model
 {
-    //
+    protected $fillable = [
+        'tour', 'date', 'name', 'amount', 'author',
+    ];
+
+    public function duties()
+    {
+        return $this->belongsToMany('App\Duty');
+    }
 }

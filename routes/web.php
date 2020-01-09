@@ -44,8 +44,6 @@ Route::post('vehicles/{vehicle}/makeAvailable', 'VehiclesController@makeAvailabl
 
 
 
-
-
 //tour
 Route::resource('tours', 'TourController');
 

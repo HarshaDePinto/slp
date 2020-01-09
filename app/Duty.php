@@ -32,4 +32,29 @@ class Duty extends Model
     {
         return $this->belongsTo('App\Vehicle');
     }
+
+    public function expenses()
+    {
+        return $this->belongsToMany('App\Expense');
+    }
+
+    public function instructions()
+    {
+        return $this->belongsToMany('App\Instruction');
+    }
+
+    public function locations()
+    {
+        return $this->belongsToMany('App\Location');
+    }
+
+    public function activities()
+    {
+        return $this->belongsToMany('App\Activity');
+    }
+
+    public function shops()
+    {
+        return $this->belongsToMany('App\Shop');
+    }
 }

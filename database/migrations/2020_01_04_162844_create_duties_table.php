@@ -17,6 +17,7 @@ class CreateDutiesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('vehicle_id')->index()->unsigned()->nullable();
             $table->integer('user_id')->index()->unsigned()->nullable();
+            $table->string('color')->nullable();
             $table->string('title');
             $table->string('number')->nullable();
             $table->integer('type');

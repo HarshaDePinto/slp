@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Activity extends Model
+class Shop extends Model
 {
     protected $fillable = [
-        'tour', 'date', 'name', 'provider', 'f_client', 't_provider', 'commission', 'author',
+        'tour', 'date', 'name', 'provider', 'bill', 'got', 'commission', 'author',
     ];
 
     public function duties()

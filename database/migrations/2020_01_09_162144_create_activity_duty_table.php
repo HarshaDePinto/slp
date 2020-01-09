@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLocationIdAndActivityIdToDuties extends Migration
+class CreateActivityDutyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddLocationIdAndActivityIdToDuties extends Migration
      */
     public function up()
     {
-        Schema::table('duties', function (Blueprint $table) {
-            $table->integer('location_id')->index()->unsigned()->nullable();
+        Schema::create('activity_duty', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->integer('activity_id')->index()->unsigned()->nullable();
-            $table->integer('shop_id')->index()->unsigned()->nullable();
-            $table->integer('expense_id')->index()->unsigned()->nullable();
+            $table->integer('duty_id')->index()->unsigned()->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,8 +28,6 @@ class AddLocationIdAndActivityIdToDuties extends Migration
      */
     public function down()
     {
-        Schema::table('duties', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('activity_duty');
     }
 }

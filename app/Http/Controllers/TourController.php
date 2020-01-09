@@ -104,30 +104,34 @@ class TourController extends Controller
     public function show($id)
     {
 
-        $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::findOrFail($tour->vehicle_id);
-        $agreement = Agreement::findOrFail($tour->agreement_id);
-        $driver = User::findOrFail($tour->user_id);
+        $tour = Duty::find($id);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+        $agreement = Agreement::find($tour->agreement_id);
+        $driver = User::find($tour->user_id);
 
-        $columns1 = [
-            'start AS start',
-            'end AS end',
-            'color AS color',
-            'title AS title'
-        ];
-        $allBookings1 = Duty::where('vehicle_id', $vehicle->id)->get($columns1);
-        $bookingsv = $allBookings1->toJson();
+        if ($vehicle && $driver) {
+            $columns1 = [
+                'start AS start',
+                'end AS end',
+                'color AS color',
+                'title AS title'
+            ];
+            $allBookings1 = Duty::where('vehicle_id', $vehicle->id)->get($columns1);
+            $bookingsv = $allBookings1->toJson();
 
-        $columns2 = [
-            'start AS start',
-            'end AS end',
-            'color AS color',
-            'title AS title'
-        ];
-        $allBookings1 = Duty::where('user_id', $driver->id)->get($columns2);
-        $bookingsd = $allBookings1->toJson();
+            $columns2 = [
+                'start AS start',
+                'end AS end',
+                'color AS color',
+                'title AS title'
+            ];
+            $allBookings1 = Duty::where('user_id', $driver->id)->get($columns2);
+            $bookingsd = $allBookings1->toJson();
 
-        return view('tours.single', compact('tour', 'vehicle', 'driver', 'agreement', 'bookingsv', 'bookingsd'));
+            return view('tours.single', compact('tour', 'vehicle', 'driver', 'agreement', 'bookingsv', 'bookingsd'));
+        } else {
+            return view('tours.single', compact('tour', 'agreement'));
+        }
     }
 
     /**

@@ -16,6 +16,14 @@ class Vehicle extends Model
         return $this->belongsTo('App\Image');
     }
 
+    public function fuels()
+    {
+        return $this->belongsToMany('App\Fuel');
+    }
+    public function maintenances()
+    {
+        return $this->belongsToMany('App\Maintenance');
+    }
     protected $dates = [
         'license_exp', 'insurance_exp',
     ];
