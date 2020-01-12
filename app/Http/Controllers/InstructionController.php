@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Agreement;
+use App\Instruction;
+use Illuminate\Http\Request;
 use App\Duty;
 use App\User;
 use App\Vehicle;
 use App\Finance;
-use Illuminate\Http\Request;
 
-class AgreementController extends Controller
+class InstructionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,6 @@ class AgreementController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -39,7 +38,12 @@ class AgreementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $instruction = Instruction::create($input);
+        $tour = Duty::find($input['tour']);
+        $instruction->duties()->save($tour);
+        session()->flash('success', 'Instruction Added Successfully!');
+        return back();
     }
 
     /**
@@ -50,11 +54,7 @@ class AgreementController extends Controller
      */
     public function show($id)
     {
-        $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::find($tour->vehicle_id);
-        $agreement = Agreement::findOrFail($tour->agreement_id);
-        $driver = User::find($tour->user_id);
-        return view('agreement.index', compact('tour', 'vehicle', 'driver', 'agreement'));
+        //
     }
 
     /**
@@ -65,20 +65,7 @@ class AgreementController extends Controller
      */
     public function edit($id)
     {
-        $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::find($tour->vehicle_id);
-        $agreement = Agreement::findOrFail($tour->agreement_id);
-        $driver = User::find($tour->user_id);
-
-        if (!$driver) {
-            return view('agreement.edit', compact('tour', 'vehicle', 'agreement'));
-        } elseif (!$vehicle) {
-            return view('agreement.edit', compact('tour', 'driver', 'agreement'));
-        } elseif ($driver && $vehicle) {
-            return view('agreement.edit', compact('tour', 'vehicle', 'driver', 'agreement'));
-        } else {
-            return view('agreement.edit', compact('tour', 'agreement'));
-        }
+        //
     }
 
     /**
@@ -90,11 +77,11 @@ class AgreementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $agreement = Agreement::findOrFail($id);
         $input = $request->all();
-        $agreement->update($input);
-
-        return redirect(route('tours.index'));
+        $instruction = Instruction::find($id);
+        $instruction->update($input);
+        session()->flash('success', ' UpdatedSuccessfully!');
+        return back();
     }
 
     /**

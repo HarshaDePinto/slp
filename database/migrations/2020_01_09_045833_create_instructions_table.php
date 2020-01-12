@@ -16,9 +16,9 @@ class CreateInstructionsTable extends Migration
         Schema::create('instructions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('name')->nullable();
-            $table->string('author')->nullable();
+            $table->string('author_c')->nullable();
+            $table->string('author_u')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

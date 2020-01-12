@@ -99,7 +99,7 @@ class AdminUsersController extends Controller
         $user->update($input);
 
 
-        return redirect(route('users.index'));
+        return back();
     }
 
     /**

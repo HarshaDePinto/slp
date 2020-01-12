@@ -62,7 +62,7 @@
                                     </td>
 
                                     <td>
-                                        <a href=""><h5 class="text-center"><i class="fas fa-angle-double-right"></i></h5></a>
+                                        <a href="{{route('tour.manage',$tour->id)}}"><h5 class="text-center"><i class="fas fa-angle-double-right"></i></h5></a>
 
                                     </td>
 
@@ -305,7 +305,9 @@
                                 <td>
                                 @if ($tour->status==1)
                                     @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s'))
-                                        <h5 class="text-info">{{'On Going'}}</h5>
+                                        <h5 >
+                                        <a href="{{route('tour.manage',$tour->id)}}">On Going <i class="fas fa-angle-double-right"></i></a>
+                                        </h5>
 
                                     @else
                                     <form class="form-inline" action="{{route('tours.makePending',$tour->id)}}" method="POST">

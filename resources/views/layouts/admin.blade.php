@@ -155,6 +155,30 @@
                 </div>
             @endif
 
+
+        {{--Driver Action--}}
+            @if (Auth::user()->role_id==3)
+                <div class="row ">
+                    <div class="col-md-3 mb-2">
+                    <a href="" class="btn btn-primary btn-block dropdown">
+                    <i class="fas fa-plus"></i> Incom</a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                    <a href="" class="btn btn-success btn-block">
+                    <i class="fas fa-plus"></i> Tour</a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                    <a href="" class="btn btn-warning btn-block">
+                    <i class="fas fa-plus"></i>Have to Fix</a>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ url('/home') }}" class="btn btn-dark btn-block">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </div>
+                </div>
+            @endif
+
+
     </div>
 
 </section>

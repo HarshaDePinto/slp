@@ -16,7 +16,6 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('location')->nullable();
             $table->integer('s_meter')->default(0);
             $table->integer('c_meter')->default(0);

@@ -51,5 +51,24 @@ Route::post('tours/{tour}/makeConfirm', 'TourController@makeConfirm')->name('tou
 
 Route::post('tours/{tour}/makePending', 'TourController@makePending')->name('tours.makePending');
 
+Route::get('tours/{tour}/manage', 'TourController@manage')->name('tour.manage');
+
+Route::get('tours/{tour}/locations', 'TourController@locations')->name('tour.locations');
+
+Route::get('tours/{tour}/fuels', 'TourController@fuels')->name('tour.fuels');
+
 //agreements
 Route::resource('agreement', 'AgreementController');
+
+
+//Instructions
+
+Route::resource('instructions', 'InstructionController');
+
+//Locations
+
+Route::resource('locations', 'LocationsController');
+
+//Fuel
+
+Route::resource('fuels', 'FuelsController');

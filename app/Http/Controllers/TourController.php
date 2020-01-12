@@ -9,6 +9,7 @@ use App\Duty;
 use App\User;
 use App\Vehicle;
 use App\Finance;
+use App\Location;
 
 
 class TourController extends Controller
@@ -108,7 +109,6 @@ class TourController extends Controller
         $vehicle = Vehicle::find($tour->vehicle_id);
         $agreement = Agreement::find($tour->agreement_id);
         $driver = User::find($tour->user_id);
-
         if ($vehicle && $driver) {
             $columns1 = [
                 'start AS start',
@@ -143,9 +143,14 @@ class TourController extends Controller
     public function edit($id)
     {
         $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::findOrFail($tour->vehicle_id);
-        $driver = User::findOrFail($tour->user_id);
-        return view('tours.create')->with('tour', $tour)->with('selected_v', $vehicle)->with('selected_d', $driver)->with('drivers', User::all())->with('vehicles', Vehicle::all());
+        $vehicle = Vehicle::find($tour->vehicle_id);
+        $driver = User::find($tour->user_id);
+
+        if ($vehicle && $driver) {
+            return view('tours.create')->with('tour', $tour)->with('selected_v', $vehicle)->with('selected_d', $driver)->with('drivers', User::all())->with('vehicles', Vehicle::all());
+        } else {
+            return view('tours.create')->with('tour', $tour)->with('drivers', User::all())->with('vehicles', Vehicle::all());
+        }
     }
 
     /**
@@ -194,5 +199,27 @@ class TourController extends Controller
         session()->flash('success', 'Tour Make Pending Successfully!');
 
         return redirect(route('tours.index'));
+    }
+
+    public function manage($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('tours.manage')->with('tour', $tour);
+    }
+
+    public function locations($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('locations.index')->with('tour', $tour);
+    }
+
+    public function fuels($id)
+    {
+        $tour = Duty::findOrFail($id);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+
+        return view('fuels.index')->with('tour', $tour)->with('vehicle', $vehicle);
     }
 }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Agreement;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Vehicle;
 use App\Duty;
 use App\User;
-use App\Vehicle;
-use App\Finance;
-use Illuminate\Http\Request;
+use App\Location;
 
-class AgreementController extends Controller
+class LocationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,10 @@ class AgreementController extends Controller
      */
     public function index()
     {
-        //
+        $locations = Location::all();
+        if ($locations) {
+            return view('locations.index')->with('locations', $locations);
+        }
     }
 
     /**
@@ -28,7 +31,16 @@ class AgreementController extends Controller
      */
     public function create()
     {
-        //
+        $locations = Location::all();
+        $user = Auth::user();
+        $tours = Duty::all();
+        $vehicles = Vehicle::all();
+        if ($locations) {
+
+            return view('locations.create', compact('locations', 'user', 'tours', 'vehicles'));
+        } else {
+            return view('locations.create', compact('user', 'tours', 'vehicles'));
+        }
     }
 
     /**
@@ -39,7 +51,19 @@ class AgreementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $location = Location::create($input);
+        $tour = Duty::find($input['tour']);
+        $location->duties()->save($tour);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+        $vehicle->location = $input['location'];
+
+
+        $vehicle->cMilage = $input['c_meter'];
+
+        $vehicle->save();
+        session()->flash('success', 'Location Added Successfully!');
+        return back();
     }
 
     /**
@@ -50,11 +74,7 @@ class AgreementController extends Controller
      */
     public function show($id)
     {
-        $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::find($tour->vehicle_id);
-        $agreement = Agreement::findOrFail($tour->agreement_id);
-        $driver = User::find($tour->user_id);
-        return view('agreement.index', compact('tour', 'vehicle', 'driver', 'agreement'));
+        //
     }
 
     /**
@@ -65,20 +85,7 @@ class AgreementController extends Controller
      */
     public function edit($id)
     {
-        $tour = Duty::findOrFail($id);
-        $vehicle = Vehicle::find($tour->vehicle_id);
-        $agreement = Agreement::findOrFail($tour->agreement_id);
-        $driver = User::find($tour->user_id);
-
-        if (!$driver) {
-            return view('agreement.edit', compact('tour', 'vehicle', 'agreement'));
-        } elseif (!$vehicle) {
-            return view('agreement.edit', compact('tour', 'driver', 'agreement'));
-        } elseif ($driver && $vehicle) {
-            return view('agreement.edit', compact('tour', 'vehicle', 'driver', 'agreement'));
-        } else {
-            return view('agreement.edit', compact('tour', 'agreement'));
-        }
+        //
     }
 
     /**
@@ -90,11 +97,7 @@ class AgreementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $agreement = Agreement::findOrFail($id);
-        $input = $request->all();
-        $agreement->update($input);
-
-        return redirect(route('tours.index'));
+        //
     }
 
     /**

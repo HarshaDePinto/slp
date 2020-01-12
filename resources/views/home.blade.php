@@ -25,23 +25,27 @@
                         @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s') && $tour->status==1 )
                            {{-- Selecting Tours OF THe Driver --}}
                             @if ($tour->user_id==$user->id)
-                               <h2 class="text-primary">Your Duty Today:</h2>
-                                <h3 class="text-danger">{{$tour->title}}</h3>
+                               <h5 class="text-primary">Your Duty Today:
+                                <span class="text-danger">{{$tour->title}}</span></h5>
                                 @foreach ($vehicles as $vehicle)
                                     @if ($tour->vehicle_id==$vehicle->id)
-                                    <h2 class="text-primary">Today You Driving:</h2>
+                                    <h5 class="text-primary">Today You Driving:
                                     @if ($vehicle->image)
-                                    <img class="rounded-circle mr-2" height="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
+
+                                    <img class="rounded-circle mr-2" height="20" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
                                     @else
                                     {{'No Image'}}
                                     @endif
-                                    <h3 class="text-danger">{{$vehicle->number}}</h3>
-
+                                    <span class="text-danger">{{$vehicle->number}}</span></h5>
                                     @endif
-                                @endforeach
 
+
+                                @endforeach
+                                <a href="{{route('locations.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
+
+                                <a href="{{route('fuels.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel </a>
                             @else
-                            <h3 class="text-danger">YOU DO NOT HAVE ANY DUTY TODAY!!</h3>
+
                             @endif
 
                         @endif
@@ -61,6 +65,93 @@
         @else
             <div class="row">
                 <div class="col-md-6">
+                @if ($tours)
+                    @foreach ($tours as $tour)
+                        {{-- Selecting Tours On That Day --}}
+
+                        @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s') && $tour->status==1 )
+                           {{-- Selecting Tours OF THe Driver --}}
+                            @if ($tour->user_id==$user->id)
+                               <h4 class="text-primary">Instructions:</h4>
+                               @if ($tour->instructions()->count()!=0)
+                               <table class="table table-hover">
+                                   <thead>
+                                   <tr>
+                                       <th scope="col">Instruction</th>
+                                       <th scope="col">Status</th>
+                                       <th scope="col"></th>
+
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+
+
+
+
+
+                                           @foreach ($tour->instructions as $intruction)
+                                           <tr>
+                                               <td >{{$intruction->name}}</td>
+                                               <td>
+                                                   @if ($intruction->status==0)
+                                                       <h5 class="text-primary">Pending</h5>
+                                                   @else
+                                                       <h4 class="text-success"><i class="fas fa-check-circle"></i></h4>
+                                                   @endif
+                                               </td>
+                                               <td>
+                                                   @if ($intruction->status==0)
+                                                   <form class="form-inline" action="{{route('instructions.update',$intruction->id)}}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="text" class="form-control" name="author_u" value="{{ Auth::user()->name}}" hidden >
+
+                                                    <input type="text" class="form-control" name="name" value="{{ $intruction->name}}" hidden >
+
+                                                    <input type="text" class="form-control" name="status" value="1" hidden >
+                                                    <input type="text" class="form-control" name="tour" value="{{$tour->id}}" hidden >
+                                                    <button type="submit" class="btn btn-success text-white btn-sm"><i class="fas fa-check-circle"></i></button>
+
+                                                    </form>
+
+                                                   @else
+                                                   <form class="form-inline" action="{{route('instructions.update',$intruction->id)}}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="text" class="form-control" name="author_u" value="{{ Auth::user()->name}}" hidden >
+
+                                                    <input type="text" class="form-control" name="name" value="{{ $intruction->name}}" hidden >
+
+                                                    <input type="text" class="form-control" name="status" value="0" hidden >
+                                                    <input type="text" class="form-control" name="tour" value="{{$tour->id}}" hidden >
+                                                    <button type="submit" class="btn btn-danger text-white btn-sm"><i class="fas fa-times-circle"></i></button>
+
+                                                    </form>
+
+
+                                                   @endif
+                                               </td>
+                                            </tr>
+
+                                           @endforeach
+
+
+                                   </tbody>
+                               </table>
+                               @else
+                               No Ins
+                               @endif
+
+
+
+                            @else
+                            @endif
+
+                        @endif
+
+                    @endforeach
+
+                @endif
 
                 </div>
                 <div class="col-md-6">

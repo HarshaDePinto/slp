@@ -47,7 +47,7 @@
 
         <div class="form-group">
         <label class="font-weight-bold" for="title">Tour Title</label>
-            <input type="text" class="form-control" name="title" value="{{isset($tour)?$tour->title:''}}">
+            <input type="text" class="form-control" name="title" value="{{isset($tour)?$tour->title:''}}" required>
         </div>
 
 

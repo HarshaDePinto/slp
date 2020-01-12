@@ -16,7 +16,6 @@ class CreateFuelsTable extends Migration
         Schema::create('fuels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('vehicle')->nullable();
             $table->string('location')->nullable();
             $table->integer('meter')->default(0);
