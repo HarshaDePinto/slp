@@ -222,4 +222,33 @@ class TourController extends Controller
 
         return view('fuels.index')->with('tour', $tour)->with('vehicle', $vehicle);
     }
+
+    public function maintenances($id)
+    {
+        $tour = Duty::findOrFail($id);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+
+        return view('maintenances.index')->with('tour', $tour)->with('vehicle', $vehicle);
+    }
+
+    public function activities($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('activities.index')->with('tour', $tour);
+    }
+
+    public function shops($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('shops.index')->with('tour', $tour);
+    }
+
+    public function salary($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('salaries.create')->with('tour', $tour);
+    }
 }

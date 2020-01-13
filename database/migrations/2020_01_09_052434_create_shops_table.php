@@ -16,7 +16,6 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('name')->nullable();
             $table->string('provider')->nullable();
             $table->integer('bill')->default(0);

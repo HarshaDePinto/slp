@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-
-use App\Fuel;
-use App\Vehicle;
-use App\Duty;
-use App\Finance;
-use App\User;
-use App\Location;
 use Illuminate\Http\Request;
+use App\Duty;
+use App\User;
+use App\Vehicle;
+use App\Finance;
+use App\Salary;
 
-class FuelsController extends Controller
+class SalaryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,6 +18,7 @@ class FuelsController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -30,16 +28,7 @@ class FuelsController extends Controller
      */
     public function create()
     {
-        $fuels = Fuel::all();
-        $user = Auth::user();
-        $tours = Duty::all();
-        $vehicles = Vehicle::all();
-        if ($fuels) {
-
-            return view('fuels.create', compact('fuels', 'user', 'tours', 'vehicles'));
-        } else {
-            return view('fuels.create', compact('user', 'tours', 'vehicles'));
-        }
+        //
     }
 
     /**
@@ -51,14 +40,12 @@ class FuelsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $fuel = Fuel::create($input);
-        $vehicle = Vehicle::find($fuel->vehicle);
-        $fuel->vehicles()->save($vehicle);
-        $tour = Duty::find($fuel->tour);
-        $finance = Finance::find($tour->finance_id);
-        $finance->to_fuel = $finance->to_fuel + $input['amount'];
-        $finance->save();
-        session()->flash('success', 'Fuel Added Successfully!');
+        $salary = Salary::create($input);
+        $tour = Duty::find($input['tour']);
+        $salary->duties()->save($tour);
+        $driver = User::find($tour->user_id);
+        $salary->users()->save($driver);
+        session()->flash('success', 'Salary Added Successfully!');
         return back();
     }
 

@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/new', function () {
+    return view('newuser');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -56,6 +60,13 @@ Route::get('tours/{tour}/manage', 'TourController@manage')->name('tour.manage');
 Route::get('tours/{tour}/locations', 'TourController@locations')->name('tour.locations');
 
 Route::get('tours/{tour}/fuels', 'TourController@fuels')->name('tour.fuels');
+Route::get('tours/{tour}/maintenances', 'TourController@maintenances')->name('tour.maintenances');
+
+Route::get('tours/{tour}/activities', 'TourController@activities')->name('tour.activities');
+
+Route::get('tours/{tour}/shops', 'TourController@shops')->name('tour.shops');
+
+Route::get('tours/{tour}/salary', 'TourController@salary')->name('tour.salary');
 
 //agreements
 Route::resource('agreement', 'AgreementController');
@@ -72,3 +83,19 @@ Route::resource('locations', 'LocationsController');
 //Fuel
 
 Route::resource('fuels', 'FuelsController');
+
+//Maintenance
+
+Route::resource('maintenances', 'MaintenancesController');
+
+//Activities
+
+Route::resource('activities', 'ActivityController');
+
+//Shops
+
+Route::resource('shops', 'ShopsController');
+
+
+//Salary
+Route::resource('salaries', 'SalaryController');

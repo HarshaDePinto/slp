@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="background:transparent url({{asset('images/image3.jpg')}}) no-repeat center center /cover">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="opacity: 0.9;">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
@@ -57,11 +57,11 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+
+                                    <a class="btn btn-link" href="">
+                                        {{ __('Forgot Your Password? Please Contact The Office') }}
                                     </a>
-                                @endif
+
                             </div>
                         </div>
                     </form>

@@ -16,12 +16,13 @@
     <a href="{{route('tour.manage',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Instructions </a>
 
     <a href="{{route('tour.locations',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
-
     <a href="{{route('tour.fuels',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel Info </a>
 
     <a href="{{route('tour.maintenances',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Maintenances</a>
 
     <a href="{{route('tour.activities',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities</a>
+
+    <a href="{{route('tour.shops',$tour->id)}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shopping</a>
 
 
 
@@ -31,44 +32,45 @@
 @section('content')
 
     <h2 class="text-primary text-center">{{$tour->title}} Control Panel</h2>
-        {{--Locations--}}
+        {{--Activities--}}
         <div class="card mb-5">
             <div class="card-header">
-               <h3 class="text-primary">Fuel Information</h3>
+               <h3 class="text-primary">Activities</h3>
             </div>
             <div class="card-body">
-                <h5 class="card-title text-center">Details</h5>
-                @if (isset($vehicle))
-                    @if ($vehicle->fuels()->count()!=0)
+                <h5 class="card-title text-center">Activities</h5>
+                @if ($tour->activities()->count()!=0)
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Location</th>
-                            <th scope="col">Meter</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Liters</th>
+                            <th scope="col">Activity</th>
+                            <th scope="col">Provider</th>
+                            <th scope="col">From Client</th>
+                            <th scope="col">To Provider</th>
+                            <th scope="col">Commission</th>
                             <th scope="col">Created By</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                                @foreach ($vehicle->fuels as $fuel)
+                                @foreach ($tour->activities as $activity)
                                 <tr>
-                                    <td >{{$fuel->location}}</td>
+                                    <td >{{$activity->name}}</td>
                                     <td>
-                                        {{$fuel->meter}}
-                                    </td>
-
-                                    <td>
-                                        {{$fuel->amount}}
-                                    </td>
-
-                                    <td>
-                                        {{$fuel->liters}}
+                                        {{$activity->provider}}
                                     </td>
                                     <td>
-                                        {{$fuel->author}}
-                                    <br> {{$fuel->created_at->diffForHumans()}}
+                                        {{$activity->f_client}}
+                                    </td>
+                                    <td>
+                                        {{$activity->t_provider}}
+                                    </td>
+                                    <td>
+                                        {{$activity->commission}}
+                                    </td>
+                                    <td>
+                                        {{$activity->author}}
+                                    <br> {{$activity->created_at->diffForHumans()}}
                                     </td>
                                     </tr>
                                 @endforeach
@@ -77,12 +79,9 @@
                         </tbody>
                     </table>
                     @else
-                    No Fuel
+                    No Activity
                     @endif
 
-
-
-                @endif
 
 
 
@@ -95,7 +94,6 @@
 @section('script')
 
 @endsection
-
 
 
 

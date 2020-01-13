@@ -57,4 +57,9 @@ class Duty extends Model
     {
         return $this->belongsToMany('App\Shop');
     }
+
+    public function salaries()
+    {
+        return $this->belongsToMany('App\Salary');
+    }
 }

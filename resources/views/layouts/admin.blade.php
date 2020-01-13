@@ -54,6 +54,11 @@
         <a class="navbar-brand" href="{{ url('/') }}">
                     <img height="50" class="" src="{{asset('images/logo.png')}}" alt="">
         </a>
+        @if (Auth::user()->image)
+                                            <img class="rounded mr-2" width="30" src="{{ asset('images/'.Auth::user()->image->path) }}" alt="No Image">
+                                        @else
+                                        <img class="rounded-circle mr-2" width="30" src="{{ asset('images/no.png')}}" alt="No Image">
+                                        @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -79,6 +84,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link h4 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -122,7 +128,7 @@
 
                 <div class="col-md-3 mb-2">
                         <a href="{{route('tours.index')}}" class="btn btn-success btn-block">
-                            <i class="far fa-map"></i> Tours</a>
+                            <i class="far fa-map"></i> Duties</a>
                 </div>
                 <div class="col-md-3 mb-2">
                     <a href="{{ url('/home') }}" class="btn btn-dark btn-block">
@@ -135,22 +141,22 @@
         {{-- Staff Action --}}
 
             @if (Auth::user()->role_id==2)
-                <div class="row ">
+            <div class="row ">
                 <div class="col-md-3 mb-2">
-                <a href="" class="btn btn-primary btn-block dropdown">
-                <i class="fas fa-plus"></i> Add Vehicale</a>
+
                 </div>
                 <div class="col-md-3 mb-2">
-                <a href="" class="btn btn-success btn-block">
-                <i class="fas fa-plus"></i> Add Drivers</a>
+                    <a href="{{route('vehicles.index')}}" style="background-color:#FF851B;" class="btn text-white  btn-block">
+                    <i class="fas fa-car"></i> Vehicles</a>
+                </div>
+
+                <div class="col-md-3 mb-2">
+                        <a href="{{route('tours.index')}}" class="btn btn-success btn-block">
+                            <i class="far fa-map"></i> Duties</a>
                 </div>
                 <div class="col-md-3 mb-2">
-                <a href="tours.php?source=add_tour" class="btn btn-warning btn-block">
-                <i class="fas fa-plus"></i> Add Tours</a>
-                </div>
-                <div class="col-md-3 mb-2">
-                <a href="duty.php?source=add_duty" class="btn btn-dark btn-block">
-                <i class="fas fa-plus"></i> Add Duty</a>
+                    <a href="{{ url('/home') }}" class="btn btn-dark btn-block">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 </div>
                 </div>
             @endif
@@ -160,16 +166,13 @@
             @if (Auth::user()->role_id==3)
                 <div class="row ">
                     <div class="col-md-3 mb-2">
-                    <a href="" class="btn btn-primary btn-block dropdown">
-                    <i class="fas fa-plus"></i> Incom</a>
+
                     </div>
                     <div class="col-md-3 mb-2">
-                    <a href="" class="btn btn-success btn-block">
-                    <i class="fas fa-plus"></i> Tour</a>
+
                     </div>
                     <div class="col-md-3 mb-2">
-                    <a href="" class="btn btn-warning btn-block">
-                    <i class="fas fa-plus"></i>Have to Fix</a>
+
                     </div>
                     <div class="col-md-3 mb-2">
                         <a href="{{ url('/home') }}" class="btn btn-dark btn-block">

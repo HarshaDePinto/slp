@@ -18,9 +18,10 @@ class CreateFinancesTable extends Migration
             $table->string('number')->nullable();
             $table->integer('from_client')->default(0);
             $table->integer('from_activities')->default(0);
+            $table->integer('from_shops')->default(0);
             $table->integer('to_driver')->default(0);
             $table->integer('to_fuel')->default(0);
-            $table->integer('to_maintains')->default(0);
+            $table->integer('to_maintenance')->default(0);
             $table->integer('to_other')->default(0);
             $table->timestamps();
         });

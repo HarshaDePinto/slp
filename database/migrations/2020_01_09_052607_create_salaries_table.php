@@ -16,8 +16,6 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
-            $table->string('name')->nullable();
             $table->integer('salary')->default(0);
             $table->integer('activity')->default(0);
             $table->integer('shopping')->default(0);

@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
-use App\Fuel;
+use Illuminate\Http\Request;
 use App\Vehicle;
 use App\Duty;
-use App\Finance;
 use App\User;
 use App\Location;
-use Illuminate\Http\Request;
+use App\Activity;
+use App\Finance;
 
-class FuelsController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,6 +20,7 @@ class FuelsController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -30,15 +30,15 @@ class FuelsController extends Controller
      */
     public function create()
     {
-        $fuels = Fuel::all();
+        $activities = Activity::all();
         $user = Auth::user();
         $tours = Duty::all();
         $vehicles = Vehicle::all();
-        if ($fuels) {
+        if ($activities) {
 
-            return view('fuels.create', compact('fuels', 'user', 'tours', 'vehicles'));
+            return view('activities.create', compact('activities', 'user', 'tours', 'vehicles'));
         } else {
-            return view('fuels.create', compact('user', 'tours', 'vehicles'));
+            return view('activities.create', compact('user', 'tours', 'vehicles'));
         }
     }
 
@@ -51,14 +51,16 @@ class FuelsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $fuel = Fuel::create($input);
-        $vehicle = Vehicle::find($fuel->vehicle);
-        $fuel->vehicles()->save($vehicle);
-        $tour = Duty::find($fuel->tour);
+        $activity = Activity::create($input);
+        $activity->commission = ($activity->f_client - $activity->t_provider) / 2;
+        $activity->save();
+
+        $tour = Duty::find($input['tour']);
         $finance = Finance::find($tour->finance_id);
-        $finance->to_fuel = $finance->to_fuel + $input['amount'];
+        $finance->from_activities = $finance->from_activities + $activity->commission;
         $finance->save();
-        session()->flash('success', 'Fuel Added Successfully!');
+        $activity->duties()->save($tour);
+        session()->flash('success', 'Activity Added Successfully!');
         return back();
     }
 

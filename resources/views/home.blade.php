@@ -14,7 +14,7 @@
 @section('option')
     {{--ADMIN AND STAFF--}}
         @if (Auth::user()->role_id==1 || Auth::user()->role_id==2 )
-            hjkhkhkh
+
     {{--Driver--}}
         @else
             {{--GET TOUR OR DUTY--}}
@@ -44,6 +44,10 @@
                                 <a href="{{route('locations.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
 
                                 <a href="{{route('fuels.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel </a>
+                                <a href="{{route('maintenances.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Maintenances </a>
+                                <a href="{{route('activities.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities </a>
+
+                                <a href="{{route('shops.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shops </a>
                             @else
 
                             @endif

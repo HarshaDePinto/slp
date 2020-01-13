@@ -18,7 +18,7 @@
 @section('option')
     {{-- Links --}}
         <a href="{{route('users.edit',$user->id)}}" class="btn btn-info btn-block  text-white" >
-            <i class="fas fa-edit"></i>Edit User</a>
+            <i class="fas fa-edit"></i>Edit</a>
 
         <a href="{{route('users.changePassword',$user->id)}}" class="btn btn-info btn-block  text-white" >
             <i class="fas fa-key"></i></i>Change Password</a>

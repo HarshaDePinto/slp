@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="background:transparent url({{asset('images/image7.jpg')}}) no-repeat center center /cover">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card" style="opacity: 0.9;">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">

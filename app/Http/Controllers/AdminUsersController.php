@@ -98,7 +98,7 @@ class AdminUsersController extends Controller
 
         $user->update($input);
 
-
+        session()->flash('success', 'Profile updated Successfully!');
         return back();
     }
 

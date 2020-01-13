@@ -1,15 +1,6 @@
 @extends('layouts.admin')
     {{--CSS--}}
         @section('css')
-            <link href='{{'assets/fullcalendar/packages/core/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/daygrid/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/timegrid/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/list/main.css'}}' rel='stylesheet' />
-            <script src='{{'assets/fullcalendar/packages/core/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/interaction/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/daygrid/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/timegrid/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/list/main.js'}}'></script>
         @endsection
 @section('option')
     {{--ADMIN AND STAFF--}}
@@ -45,6 +36,7 @@
                                 <a href="{{route('locations.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
                                 <a href="{{route('fuels.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel </a>
                                 <a href="{{route('maintenances.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Maintenances </a>
+
                                 <a href="{{route('activities.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities </a>
                                 <a href="{{route('shops.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shops </a>
                             @else
@@ -68,9 +60,9 @@
                         @foreach ($tours as $tour)
                             @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s') && $tour->status==1 )
                                 @if ($tour->user_id==$user->id)
-                                    @if ($tour->locations()->count()!=0)
-                                        <h4 class="text-success">Locations</h4>
-                                        <form action="{{route('locations.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
+                                    @if ($tour->shops()->count()!=0)
+                                        <h4 class="text-success">Shops</h4>
+                                        <form action="{{route('shops.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
                                             @csrf
 
 
@@ -91,23 +83,28 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
                                             </div>
-                                            @foreach ($tour->locations as $location)
-                                            @if ($location->tour==$tour->id)
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="s_meter" value="{{ $location->s_meter}}" hidden >
-                                            </div>
-                                            @endif
-
-                                            @endforeach
-                                            <div class="form-group">
-                                            <label class="font-weight-bold" for="location">Location</label>
-                                                <input type="text" class="form-control" name="location" >
-                                            </div>
+                                                                                                                <div class="form-group">
+                                            <label class="font-weight-bold" for="name">Name</label>
+                                                <input type="text" class="form-control" name="name" >
+                                        </div>
+                                        <div class="form-group">
+                                                <label class="font-weight-bold" for="provider">Provider</label>
+                                                    <input type="text" class="form-control" name="provider" >
+                                        </div>
 
                                             <div class="form-group">
-                                                <label class="font-weight-bold" for="c_meter">Meter Reading</label>
-                                                    <input type="text" class="form-control" name="c_meter" >
+                                                <label class="font-weight-bold" for="bill">From Client</label>
+                                                    <input type="text" class="form-control" name="bill" >
                                                 </div>
+                                                <div class="form-group">
+                                                    <label class="font-weight-bold" for="commission">Commission Precentage</label>
+                                                        <input type="text" class="form-control" name="commission" >
+                                                    </div>
+                                            <div class="form-group">
+                                            <label class="font-weight-bold" for="got">Did You Got The Money?</label>
+                                            <input type="radio" name="got" value="1">Yes<br>
+                                            <input type="radio" name="got" value="0"> No<br>
+                                                    </div>
 
 
 
@@ -123,17 +120,17 @@
                                         <table class="table table-hover">
                                             <thead>
                                               <tr>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">Km</th>
+                                                <th scope="col">Shopping</th>
+                                                <th scope="col">Commission</th>
                                                 <th scope="col">Time</th>
                                               </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($tour->locations as $location)
+                                                @foreach ($tour->shops as $shop)
                                                     <tr>
-                                                    <td>{{$location->location}}</td>
-                                                        <td>{{$location->c_meter-$location->s_meter}}</td>
-                                                    <td>{{$location->created_at->diffForHumans()}}</td>
+                                                    <td>{{$shop->name}}</td>
+                                                        <td>{{$shop->commission}}</td>
+                                                    <td>{{$shop->created_at->diffForHumans()}}</td>
                                                     </tr>
 
                                                 @endforeach
@@ -141,57 +138,59 @@
                                             </tbody>
                                           </table>
                                     @else
-                                        <form action="{{route('locations.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
-                                            @csrf
+                                    <form action="{{route('shops.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
+                                        @csrf
 
 
-                                            {{-- For ERRORS --}}
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul class="alert-group">
-                                                        @foreach ($errors->all() as $error)
-                                                            <li class="alert-group-item text-danger">
-                                                                <h3>{{$error}}</h3>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
+                                        {{-- For ERRORS --}}
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul class="alert-group">
+                                                    @foreach ($errors->all() as $error)
+                                                        <li class="alert-group-item text-danger">
+                                                            <h3>{{$error}}</h3>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
+
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
+                                        </div>
+                                                                                                            <div class="form-group">
+                                        <label class="font-weight-bold" for="name">Name</label>
+                                            <input type="text" class="form-control" name="name" >
+                                    </div>
+                                    <div class="form-group">
+                                            <label class="font-weight-bold" for="provider">Provider</label>
+                                                <input type="text" class="form-control" name="provider" >
+                                    </div>
+
+                                        <div class="form-group">
+                                            <label class="font-weight-bold" for="bill">From Client</label>
+                                                <input type="text" class="form-control" name="bill" >
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="font-weight-bold" for="commission">Commission Precentage</label>
+                                                    <input type="text" class="form-control" name="commission" >
                                                 </div>
-                                            @endif
-
-
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
-                                            </div>
-                                            @foreach ($vehicles as $vehicle)
-                                            @if ($vehicle->id==$tour->vehicle_id)
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="s_meter" value="{{ $vehicle->cMilage}}" hidden >
-                                            </div>
-
-                                            @endif
-
-                                            @endforeach
-
-                                            <div class="form-group">
-                                            <label class="font-weight-bold" for="location">Location</label>
-                                                <input type="text" class="form-control" name="location" >
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="font-weight-bold" for="c_meter">Meter Reading</label>
-                                                    <input type="text" class="form-control" name="c_meter" >
+                                        <div class="form-group">
+                                        <label class="font-weight-bold" for="got">Did You Got The Money?</label>
+                                        <input type="radio" name="got" value="1">Yes<br>
+                                        <input type="radio" name="got" value="0"> No<br>
                                                 </div>
 
 
 
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="author" value="{{ Auth::user()->name}}" hidden >
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">
-                                            </div>
-                                            </form>
-
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="author" value="{{ Auth::user()->name}}" hidden >
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">
+                                        </div>
+                                        </form>
 
                                     @endif
                                 @endif
@@ -201,31 +200,6 @@
                         @endforeach
 
                     @endif
-
-
-
-
-
-
-
-
-
-                           {{-- Selecting Tours OF THe Driver --}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 </div>

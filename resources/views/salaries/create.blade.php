@@ -38,18 +38,18 @@
         {{--Instruction Controller--}}
         <div class="card mb-5">
             <div class="card-header">
-               <h3 class="text-primary">Instruction Controller</h3>
+               <h3 class="text-primary">Salary Controller</h3>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Instructions</h5>
-                @if ($tour->instructions()->count()!=0)
+                <h5 class="card-title">Salary</h5>
+                @if ($tour->salaries()->count()!=0)
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Instruction</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Created</th>
-                            <th scope="col">Updated</th>
+                            <th scope="col">Daily Salary</th>
+                            <th scope="col">Activities</th>
+                            <th scope="col">Shopping</th>
+                            <th scope="col">Other</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,22 +58,23 @@
 
 
 
-                                @foreach ($tour->instructions as $intruction)
+                                @foreach ($tour->salaries as $salary)
                                 <tr>
-                                    <td >{{$intruction->name}}</td>
+                                    <td >{{$salary->salary}}</td>
                                     <td>
-                                        @if ($intruction->status==0)
-                                            <h5 class="text-primary">Pending</h5>
-                                        @else
-                                            <h4 class="text-success"><i class="fas fa-check-circle"></i></h4>
-                                        @endif
+                                        {{$salary->activity}}
                                     </td>
+
                                     <td>
-                                        {{$intruction->author_c}}
-                                    <br> {{$intruction->created_at->diffForHumans()}}
+                                        {{$salary->shopping}}
                                     </td>
-                                    <td>{{$intruction->author_u}}
-                                        <br> {{$intruction->updated_at->diffForHumans()}}</td>
+
+                                    <td>
+                                        {{$salary->other}}
+                                    </td>
+
+                                    <td>{{$salary->author}}
+                                        <br> {{$salary->updated_at->diffForHumans()}}</td>
                                     </tr>
                                 @endforeach
 
@@ -81,13 +82,13 @@
                         </tbody>
                     </table>
                     @else
-                    No Ins
+                    No Salary Details
                     @endif
 
 
 
 
-                        <form action="{{route('instructions.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
+                        <form action="{{route('salaries.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
                             @csrf
 
 
@@ -109,15 +110,33 @@
                                 <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
                             </div>
 
+
+
+
                             <div class="form-group">
-                            <label class="font-weight-bold" for="name">Instruction</label>
-                                <input type="text" class="form-control" name="name" >
+                            <label class="font-weight-bold" for="salary">Day salary</label>
+                                <input type="text" class="form-control" name="salary" >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold" for="activity">Activity Income</label>
+                                    <input type="text" class="form-control" name="activity" >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold" for="shopping">Shopping Income</label>
+                                    <input type="text" class="form-control" name="shopping" >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="font-weight-bold" for="other">Other Income</label>
+                                    <input type="text" class="form-control" name="other" >
                             </div>
 
 
 
                             <div class="form-group">
-                                <input type="text" class="form-control" name="author_c" value="{{ Auth::user()->name}}" hidden >
+                                <input type="text" class="form-control" name="author" value="{{ Auth::user()->name}}" hidden >
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">

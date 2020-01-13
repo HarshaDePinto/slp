@@ -16,7 +16,6 @@ class CreateMaintenancesTable extends Migration
         Schema::create('maintenances', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('vehicle')->nullable();
             $table->string('details')->nullable();
             $table->string('location')->nullable();

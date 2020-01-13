@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $fillable = [
-        'tour', 'date', 'name', 'provider', 'f_client', 't_provider', 'commission', 'author',
+        'tour', 'name', 'provider', 'f_client', 't_provider', 'commission', 'author',
     ];
 
     public function duties()

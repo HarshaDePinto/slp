@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
-use App\Fuel;
+use Illuminate\Http\Request;
 use App\Vehicle;
 use App\Duty;
-use App\Finance;
 use App\User;
 use App\Location;
-use Illuminate\Http\Request;
+use App\Activity;
+use App\Finance;
+use App\Shop;
 
-class FuelsController extends Controller
+class ShopsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,6 +21,7 @@ class FuelsController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -30,15 +31,15 @@ class FuelsController extends Controller
      */
     public function create()
     {
-        $fuels = Fuel::all();
+        $shops = Shop::all();
         $user = Auth::user();
         $tours = Duty::all();
         $vehicles = Vehicle::all();
-        if ($fuels) {
+        if ($shops) {
 
-            return view('fuels.create', compact('fuels', 'user', 'tours', 'vehicles'));
+            return view('shops.create', compact('shops', 'user', 'tours', 'vehicles'));
         } else {
-            return view('fuels.create', compact('user', 'tours', 'vehicles'));
+            return view('shops.create', compact('user', 'tours', 'vehicles'));
         }
     }
 
@@ -51,14 +52,16 @@ class FuelsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $fuel = Fuel::create($input);
-        $vehicle = Vehicle::find($fuel->vehicle);
-        $fuel->vehicles()->save($vehicle);
-        $tour = Duty::find($fuel->tour);
+        $shop = Shop::create($input);
+        $shop->commission = $shop->bill * $shop->commission / 200;
+        $shop->save();
+
+        $tour = Duty::find($input['tour']);
         $finance = Finance::find($tour->finance_id);
-        $finance->to_fuel = $finance->to_fuel + $input['amount'];
+        $finance->from_shops = $finance->from_shops + $shop->commission;
         $finance->save();
-        session()->flash('success', 'Fuel Added Successfully!');
+        $shop->duties()->save($tour);
+        session()->flash('success', 'Shopping Added Successfully!');
         return back();
     }
 

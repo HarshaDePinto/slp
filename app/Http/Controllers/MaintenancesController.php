@@ -10,9 +10,11 @@ use App\Duty;
 use App\Finance;
 use App\User;
 use App\Location;
+use App\Maintenance;
+
 use Illuminate\Http\Request;
 
-class FuelsController extends Controller
+class MaintenancesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,6 +23,7 @@ class FuelsController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -30,15 +33,15 @@ class FuelsController extends Controller
      */
     public function create()
     {
-        $fuels = Fuel::all();
+        $maintenances = Maintenance::all();
         $user = Auth::user();
         $tours = Duty::all();
         $vehicles = Vehicle::all();
-        if ($fuels) {
+        if ($maintenances) {
 
-            return view('fuels.create', compact('fuels', 'user', 'tours', 'vehicles'));
+            return view('maintenances.create', compact('maintenances', 'user', 'tours', 'vehicles'));
         } else {
-            return view('fuels.create', compact('user', 'tours', 'vehicles'));
+            return view('maintenances.create', compact('user', 'tours', 'vehicles'));
         }
     }
 
@@ -51,14 +54,14 @@ class FuelsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $fuel = Fuel::create($input);
-        $vehicle = Vehicle::find($fuel->vehicle);
-        $fuel->vehicles()->save($vehicle);
-        $tour = Duty::find($fuel->tour);
+        $maintenance = Maintenance::create($input);
+        $vehicle = Vehicle::find($maintenance->vehicle);
+        $maintenance->vehicles()->save($vehicle);
+        $tour = Duty::find($maintenance->tour);
         $finance = Finance::find($tour->finance_id);
-        $finance->to_fuel = $finance->to_fuel + $input['amount'];
+        $finance->to_maintenance = $finance->to_maintenance + $input['amount'];
         $finance->save();
-        session()->flash('success', 'Fuel Added Successfully!');
+        session()->flash('success', 'Maintenance Added Successfully!');
         return back();
     }
 

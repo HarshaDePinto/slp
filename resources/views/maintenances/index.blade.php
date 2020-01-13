@@ -34,41 +34,42 @@
         {{--Locations--}}
         <div class="card mb-5">
             <div class="card-header">
-               <h3 class="text-primary">Fuel Information</h3>
+               <h3 class="text-primary">Maintenances Information</h3>
             </div>
             <div class="card-body">
                 <h5 class="card-title text-center">Details</h5>
                 @if (isset($vehicle))
-                    @if ($vehicle->fuels()->count()!=0)
+                    @if ($vehicle->maintenances()->count()!=0)
                     <table class="table table-hover">
                         <thead>
                         <tr>
+                            <th scope="col">Details</th>
                             <th scope="col">Location</th>
+                            <th scope="col">Provider</th>
                             <th scope="col">Meter</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Liters</th>
                             <th scope="col">Created By</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                                @foreach ($vehicle->fuels as $fuel)
+                                @foreach ($vehicle->maintenances as $maintenance)
                                 <tr>
-                                    <td >{{$fuel->location}}</td>
+                                    <td >{{$maintenance->details}}</td>
+                                    <td >{{$maintenance->location}}</td>
+                                    <td >{{$maintenance->provider}}</td>
                                     <td>
-                                        {{$fuel->meter}}
+                                        {{$maintenance->meter}}
                                     </td>
 
                                     <td>
-                                        {{$fuel->amount}}
+                                        {{$maintenance->amount}}
                                     </td>
 
+
                                     <td>
-                                        {{$fuel->liters}}
-                                    </td>
-                                    <td>
-                                        {{$fuel->author}}
-                                    <br> {{$fuel->created_at->diffForHumans()}}
+                                        {{$maintenance->author}}
+                                    <br> {{$maintenance->created_at->diffForHumans()}}
                                     </td>
                                     </tr>
                                 @endforeach
@@ -77,15 +78,14 @@
                         </tbody>
                     </table>
                     @else
-                    No Fuel
-                    @endif
-
-
-
+                    No Maintenances
                 @endif
 
 
 
+
+
+                @endif
 
             </div>
         </div>

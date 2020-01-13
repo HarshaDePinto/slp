@@ -1,15 +1,7 @@
 @extends('layouts.admin')
     {{--CSS--}}
         @section('css')
-            <link href='{{'assets/fullcalendar/packages/core/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/daygrid/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/timegrid/main.css'}}' rel='stylesheet' />
-            <link href='{{'assets/fullcalendar/packages/list/main.css'}}' rel='stylesheet' />
-            <script src='{{'assets/fullcalendar/packages/core/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/interaction/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/daygrid/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/timegrid/main.js'}}'></script>
-            <script src='{{'assets/fullcalendar/packages/list/main.js'}}'></script>
+
         @endsection
 @section('option')
     {{--ADMIN AND STAFF--}}
@@ -38,13 +30,13 @@
                                     @endif
                                     <span class="text-danger">{{$vehicle->number}}</span></h5>
 
-
                                     @endif
 
 
                                 @endforeach
                                 <a href="{{route('locations.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
                                 <a href="{{route('fuels.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel </a>
+
                                 <a href="{{route('maintenances.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Maintenances </a>
                                 <a href="{{route('activities.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities </a>
                                 <a href="{{route('shops.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shops </a>
@@ -73,10 +65,10 @@
                                     @foreach ($vehicles as $vehicle)
 
                                         @if ($vehicle->id==$tour->vehicle_id)
-                                            @if ($vehicle->fuels()->count()!=0)
+                                            @if ($vehicle->maintenances()->count()!=0)
 
 
-                                                <form action="{{route('fuels.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
+                                                <form action="{{route('maintenances.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
                                                 @csrf
 
 
@@ -108,6 +100,15 @@
                                                 </div>
 
                                                 <div class="form-group">
+                                                    <label class="font-weight-bold" for="details">Details</label>
+                                                        <input type="text" class="form-control" name="details" >
+                                                    </div>
+                                                <div class="form-group">
+                                                <label class="font-weight-bold" for="provider">Provider</label>
+                                                <input type="text" class="form-control" name="provider" >
+                                                        </div>
+
+                                                <div class="form-group">
                                                     <label class="font-weight-bold" for="meter">Meter Reading</label>
                                                         <input type="text" class="form-control" name="meter" >
                                                     </div>
@@ -115,10 +116,6 @@
                                                         <label class="font-weight-bold" for="amount">Amount</label>
                                                             <input type="text" class="form-control" name="amount" >
                                                         </div>
-                                                    <div class="form-group">
-                                                    <label class="font-weight-bold" for="liters">Liters </label>
-                                                                <input type="text" class="form-control" name="liters" >
-                                                            </div>
 
 
                                                 <div class="form-group">
@@ -132,76 +129,84 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                       <tr>
-                                                        <th scope="col">Location</th>
+                                                        <th scope="col">Details</th>
                                                         <th scope="col">Amount</th>
+
                                                         <th scope="col">Time</th>
                                                       </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($vehicle->fuels as $fuel)
+                                                        @foreach ($vehicle->maintenances as $maintenance)
                                                             <tr>
-                                                            <td>{{$fuel->location}}</td>
-                                                                <td>{{$fuel->amount}}</td>
-                                                            <td>{{$fuel->created_at->diffForHumans()}}</td>
+                                                            <td>{{$maintenance->details}}</td>
+                                                            <td>{{$maintenance->amount}}</td>
+
+                                                            <td>{{$maintenance->created_at->diffForHumans()}}</td>
                                                             </tr>
 
                                                         @endforeach
 
                                                         </tbody>
                                                     </table>
-                                            @else
-                                                <form action="{{route('fuels.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
-                                                @csrf
+                                        @else
+
+                                                <form action="{{route('maintenances.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
+                                                    @csrf
 
 
-                                                {{-- For ERRORS --}}
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul class="alert-group">
-                                                            @foreach ($errors->all() as $error)
-                                                                <li class="alert-group-item text-danger">
-                                                                    <h3>{{$error}}</h3>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                                                    {{-- For ERRORS --}}
+                                                    @if ($errors->any())
+                                                        <div class="alert alert-danger">
+                                                            <ul class="alert-group">
+                                                                @foreach ($errors->all() as $error)
+                                                                    <li class="alert-group-item text-danger">
+                                                                        <h3>{{$error}}</h3>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        @endif
+
+
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
                                                     </div>
-                                                @endif
 
-
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="vehicle" value="{{ $vehicle->id}}" hidden >
-                                                </div>
-
-                                                <div class="form-group">
-                                                <label class="font-weight-bold" for="location">Location</label>
-                                                    <input type="text" class="form-control" name="location" >
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="font-weight-bold" for="meter">Meter Reading</label>
-                                                        <input type="text" class="form-control" name="meter" >
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="vehicle" value="{{ $vehicle->id}}" hidden >
                                                     </div>
-                                                <div class="form-group">
-                                                        <label class="font-weight-bold" for="amount">Amount</label>
-                                                            <input type="text" class="form-control" name="amount" >
+
+                                                    <div class="form-group">
+                                                    <label class="font-weight-bold" for="location">Location</label>
+                                                        <input type="text" class="form-control" name="location" >
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="details">Details</label>
+                                                            <input type="text" class="form-control" name="details" >
                                                         </div>
                                                     <div class="form-group">
-                                                    <label class="font-weight-bold" for="liters">Liters </label>
-                                                                <input type="text" class="form-control" name="liters" >
+                                                    <label class="font-weight-bold" for="provider">Provider</label>
+                                                    <input type="text" class="form-control" name="provider" >
+                                                            </div>
+
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold" for="meter">Meter Reading</label>
+                                                            <input type="text" class="form-control" name="meter" >
+                                                        </div>
+                                                    <div class="form-group">
+                                                            <label class="font-weight-bold" for="amount">Amount</label>
+                                                                <input type="text" class="form-control" name="amount" >
                                                             </div>
 
 
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="author" value="{{ Auth::user()->name}}" hidden >
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">
-                                                </div>
-                                                </form>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="author" value="{{ Auth::user()->name}}" hidden >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">
+                                                    </div>
+                                                    </form>
                                             @endif
 
                                         @endif
@@ -216,32 +221,6 @@
 
                     @endif
 
-
-
-
-
-
-
-
-
-                           {{-- Selecting Tours OF THe Driver --}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
                 <div class="col-md-6">
 
@@ -255,3 +234,4 @@
 
 @section('script')
 @endsection
+

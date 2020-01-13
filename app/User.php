@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Image');
     }
+
+    public function salaries()
+    {
+        return $this->belongsToMany('App\Salary');
+    }
 }

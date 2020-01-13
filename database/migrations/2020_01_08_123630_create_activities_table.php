@@ -16,7 +16,6 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tour')->nullable();
-            $table->dateTime('date')->nullable();
             $table->string('name')->nullable();
             $table->string('provider')->nullable();
             $table->integer('f_client')->default(0);
