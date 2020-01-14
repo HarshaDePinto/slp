@@ -52,8 +52,10 @@ class VehiclesController extends Controller
             $input['image_id'] = $image->id;
         }
 
-        Vehicle::create($input);
-        session()->flash('success', 'Vehicle Added Successfully!');
+        $vehicle = Vehicle::create($input);
+        $vehicle->cMilage = $input['sMilage'];
+        $vehicle->save();
+        session()->flash('success', $vehicle->name . ' Added Successfully!');
 
         return redirect(route('vehicles.index'));
     }
@@ -84,9 +86,9 @@ class VehiclesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Vehicle $vehicle)
     {
-        //
+        return view('vehicles.create')->with('vehicle', $vehicle);
     }
 
     /**

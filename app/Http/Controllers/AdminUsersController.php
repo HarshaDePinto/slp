@@ -60,7 +60,8 @@ class AdminUsersController extends Controller
         ];
         $allBookings1 = Duty::where('user_id', $user->id)->get($columns1);
         $bookings1 = $allBookings1->toJson();
-        return view('users.single', compact('bookings1', 'user'));
+        $duties = Duty::all();
+        return view('users.single', compact('bookings1', 'user', 'duties'));
     }
 
     /**

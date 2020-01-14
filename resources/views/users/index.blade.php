@@ -2,9 +2,9 @@
 
 @section('option')
     {{--Buttons--}}
-
-        <button style="background-color:#39CCCC;" class="btn btn-block  text-white" onclick="show('operation1')">Drivers</button>
-        <button style="background-color:#39CCCC;" class="btn btn-block  text-white" onclick="show('operation2')">Staff</button>
+        <a href="{{route('users.index')}}"  style="background-color:#39CCCC;" class="btn btn-block  text-white" ><i class="fas fa-users"></i> USERS</a>
+        <button style="background-color:#483D8B ;" class="btn btn-block  text-white" onclick="show('operation1')"><i class="fas fa-user-tie"></i> Drivers</button>
+        <button style="background-color:#6A5ACD;" class="btn btn-block  text-white" onclick="show('operation2')"><i class="fas fa-user-shield"></i> Staff</button>
 
 
 
@@ -32,7 +32,7 @@
                                                 @if ($user->image)
                                                     <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$user->image->path) }}" alt="No Image">
                                                 @else
-                                                    {{'No Image'}}
+                                                    <img class="rounded-circle mr-2" width="50" src="{{ asset('images/no.png') }}" alt="No Image">
                                                 @endif
 
                                                     {{$user->name}}</a>
@@ -110,7 +110,7 @@
                                                 @if ($user->image)
                                                     <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$user->image->path) }}" alt="No Image">
                                                 @else
-                                                    {{'No Image'}}
+                                                    <img class="rounded-circle mr-2" width="50" src="{{ asset('images/no.png') }}" alt="No Image">
                                                 @endif
 
                                                     {{$user->name}}</a>
@@ -194,7 +194,7 @@
                                         @if ($user->image)
                                             <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$user->image->path) }}" alt="No Image">
                                         @else
-                                            {{'No Image'}}
+                                            <img class="rounded-circle mr-2" width="50" src="{{ asset('images/no.png') }}" alt="No Image">
                                         @endif
 
                                             {{$user->name}}</a>

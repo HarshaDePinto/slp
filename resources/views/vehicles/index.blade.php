@@ -1,15 +1,17 @@
 @extends('layouts.admin')
 
 @section('option')
-<a href="{{route('vehicles.create')}}" class="btn btn-primary btn-block dropdown">
-    <i class="fas fa-plus"></i> Add Vehicale</a>
+    {{--Links--}}
+        <a href="{{route('vehicles.create')}}" class="btn btn-primary btn-block dropdown">
+        <i class="fas fa-plus"></i> Add Vehicale</a>
 
 
-    <button style="background-color:#FF851B;" class="btn btn-block  text-white" onclick="show('operation1')">On Duty</button>
-    <button style="background-color:#FF851B;" class="btn btn-block  text-white" onclick="show('operation2')">Available</button>
-    <button style="background-color:#FF851B;" class="btn btn-block  text-white" onclick="show('operation3')">Unavailable</button>
+        <button style="background-color:#D35400;" class="btn btn-block  text-white" onclick="show('operation1')">On Duty</button>
+        <button style="background-color:#E67E22;" class="btn btn-block  text-white" onclick="show('operation2')">Available</button>
+        <button style="background-color:#F39C12;" class="btn btn-block  text-white" onclick="show('operation3')">Unavailable</button>
 
-    <div id="operation1" style="display:none">
+    {{--OPTIONS--}}
+        <div id="operation1" style="display:none">
         <table class="table table-hover">
             <thead>
               <tr>
@@ -34,7 +36,7 @@
                         @if ($vehicle->image)
                         <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
                         @else
-                        {{'No Image'}}
+                        <img class="rounded-circle mr-2" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="No Image">
                         @endif
 
                         {{$vehicle->number}}
@@ -46,9 +48,6 @@
                     <td>{{$vehicle->updated_at->diffForHumans()}}<br> {{$vehicle->author}}</td>
 
                   </tr>
-
-
-
 
                 @endif
 
@@ -70,163 +69,163 @@
 
     </div>
 
-{{-- End Of Onduty --}}
-<div id="operation2" style="display:none">
-    <table class="table table-hover">
-        <thead>
-          <tr>
-            <th class="text-center" >Vehicle</th>
-            <th >Loction</th>
-            <th >Status</th>
-            <th >Updated At</th>
+        {{-- End Of Onduty --}}
+        <div id="operation2" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="text-center" >Vehicle</th>
+                    <th >Loction</th>
+                    <th >Status</th>
+                    <th >Updated At</th>
 
-          </tr>
-        </thead>
-        <tbody>
-            @if ($vehicles)
-            @foreach ($vehicles as $vehicle)
-
-            @if ($vehicle->status==1)
-            <tr>
-
-                <td><a href="{{route('vehicles.show',$vehicle->id)}}">
-                    @if ($vehicle->image)
-                    <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
-                    @else
-                    {{'No Image'}}
-                    @endif
-
-                    {{$vehicle->number}}
-                </a></td>
-                <td>{{$vehicle->location}}</td>
-                <td>
-
-                    @if ($vehicle->status!=2)
+                </tr>
+                </thead>
+                <tbody>
+                    @if ($vehicles)
+                    @foreach ($vehicles as $vehicle)
 
                     @if ($vehicle->status==1)
+                    <tr>
 
-                    <form class="form-inline" action="{{route('vehicles.makeUnavailable',$vehicle->id)}}" method="POST">
-                        @csrf
-                        <label class="text-primary mr-2" >Available</label>
-                        <button type="submit" class="btn btn-danger btn-sm">Make Unavailable</button>
+                        <td><a href="{{route('vehicles.show',$vehicle->id)}}">
+                            @if ($vehicle->image)
+                            <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
+                            @else
+                            <img class="rounded-circle mr-2" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="No Image">
+                            @endif
 
-                        </form>
+                            {{$vehicle->number}}
+                        </a></td>
+                        <td>{{$vehicle->location}}</td>
+                        <td>
 
-                    @else
-                    <form class="form-inline" action="{{route('vehicles.makeAvailable',$vehicle->id)}}" method="POST">
-                        @csrf
-                        <label class="text-danger mr-2" >Unavailable</label>
-                        <button type="submit" class="btn btn-primary btn-sm">Make Available</button>
+                            @if ($vehicle->status!=2)
 
-                        </form>
+                            @if ($vehicle->status==1)
 
+                            <form class="form-inline" action="{{route('vehicles.makeUnavailable',$vehicle->id)}}" method="POST">
+                                @csrf
+                                <label class="text-primary mr-2" >Available</label>
+                                <button type="submit" class="btn btn-danger btn-sm">Make Unavailable</button>
+
+                                </form>
+
+                            @else
+                            <form class="form-inline" action="{{route('vehicles.makeAvailable',$vehicle->id)}}" method="POST">
+                                @csrf
+                                <label class="text-danger mr-2" >Unavailable</label>
+                                <button type="submit" class="btn btn-primary btn-sm">Make Available</button>
+
+                                </form>
+
+
+                            @endif
+
+
+                            @else
+                            <h6 class="text-danger">{{'On Duty'}}</h6>
+
+                            @endif
+
+
+
+
+                        </td>
+                        <td>{{$vehicle->updated_at->diffForHumans()}}<br> {{$vehicle->author}}</td>
+
+                    </tr>
+                    @endif
+
+                    @endforeach
 
                     @endif
 
 
-                    @else
-                    <h6 class="text-danger">{{'On Duty'}}</h6>
+                </tbody>
+            </table>
 
-                    @endif
+            </div>
 
-
-
-
-                </td>
-                <td>{{$vehicle->updated_at->diffForHumans()}}<br> {{$vehicle->author}}</td>
-
-              </tr>
-            @endif
-
-            @endforeach
-
-            @endif
-
-
-        </tbody>
-      </table>
-
-</div>
-
-{{-- End Of Available --}}
-<div id="operation3" style="display:none">
-    <table class="table table-hover">
-        <thead>
-          <tr>
-            <th class="text-center" >Vehicle</th>
-            <th >Loction</th>
-            <th >Status</th>
-            <th >Updated At</th>
-
-          </tr>
-        </thead>
-        <tbody>
-            @if ($vehicles)
-            @foreach ($vehicles as $vehicle)
-
-            @if ($vehicle->status==0)
+        {{-- End Of Available --}}
+        <div id="operation3" style="display:none">
+            <table class="table table-hover">
+            <thead>
             <tr>
+                <th class="text-center" >Vehicle</th>
+                <th >Loction</th>
+                <th >Status</th>
+                <th >Updated At</th>
 
-                <td><a href="{{route('vehicles.show',$vehicle->id)}}">
-                    @if ($vehicle->image)
-                    <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
-                    @else
-                    {{'No Image'}}
-                    @endif
+            </tr>
+            </thead>
+            <tbody>
+                @if ($vehicles)
+                @foreach ($vehicles as $vehicle)
 
-                    {{$vehicle->number}}
-                </a></td>
-                <td>{{$vehicle->location}}</td>
-                <td>
+                @if ($vehicle->status==0)
+                <tr>
 
-                    @if ($vehicle->status!=2)
+                    <td><a href="{{route('vehicles.show',$vehicle->id)}}">
+                        @if ($vehicle->image)
+                        <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
+                        @else
+                        <img class="rounded-circle mr-2" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="No Image">
+                        @endif
 
-                    @if ($vehicle->status==1)
+                        {{$vehicle->number}}
+                    </a></td>
+                    <td>{{$vehicle->location}}</td>
+                    <td>
 
-                    <form class="form-inline" action="{{route('vehicles.makeUnavailable',$vehicle->id)}}" method="POST">
-                        @csrf
-                        <label class="text-primary mr-2" >Available</label>
-                        <button type="submit" class="btn btn-danger btn-sm">Make Unavailable</button>
+                        @if ($vehicle->status!=2)
 
-                        </form>
+                        @if ($vehicle->status==1)
 
-                    @else
-                    <form class="form-inline" action="{{route('vehicles.makeAvailable',$vehicle->id)}}" method="POST">
-                        @csrf
-                        <label class="text-danger mr-2" >Unavailable</label>
-                        <button type="submit" class="btn btn-primary btn-sm">Make Available</button>
+                        <form class="form-inline" action="{{route('vehicles.makeUnavailable',$vehicle->id)}}" method="POST">
+                            @csrf
+                            <label class="text-primary mr-2" >Available</label>
+                            <button type="submit" class="btn btn-danger btn-sm">Make Unavailable</button>
 
-                        </form>
+                            </form>
 
+                        @else
+                        <form class="form-inline" action="{{route('vehicles.makeAvailable',$vehicle->id)}}" method="POST">
+                            @csrf
+                            <label class="text-danger mr-2" >Unavailable</label>
+                            <button type="submit" class="btn btn-primary btn-sm">Make Available</button>
 
-                    @endif
-
-
-                    @else
-                    <h6 class="text-danger">{{'On Duty'}}</h6>
-
-                    @endif
-
-
-
-
-                </td>
-                <td>{{$vehicle->updated_at->diffForHumans()}}<br> {{$vehicle->author}}</td>
-
-              </tr>
-            @endif
-
-            @endforeach
-
-            @endif
+                            </form>
 
 
-        </tbody>
-      </table>
+                        @endif
 
-</div>
 
-    @endsection
+                        @else
+                        <h6 class="text-danger">{{'On Duty'}}</h6>
+
+                        @endif
+
+
+
+
+                    </td>
+                    <td>{{$vehicle->updated_at->diffForHumans()}}<br> {{$vehicle->author}}</td>
+
+                </tr>
+                @endif
+
+                @endforeach
+
+                @endif
+
+
+            </tbody>
+            </table>
+
+        </div>
+
+@endsection
 
 
 @section('content')
@@ -251,7 +250,7 @@
                     @if ($vehicle->image)
                     <img class="rounded-circle mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
                     @else
-                    {{'No Image'}}
+                    <img class="rounded-circle mr-2" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="No Image">
                     @endif
 
                     {{$vehicle->number}}

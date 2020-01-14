@@ -119,7 +119,7 @@
                 <div class="row ">
                 <div class="col-md-3 mb-2">
                     <a href="{{route('users.index')}}"  style="background-color:#39CCCC;" class="btn btn-block  text-white" >
-                        <i class="fas fa-user"></i> USERS</a>
+                        <i class="fas fa-users"></i>  USERS</a>
                 </div>
                 <div class="col-md-3 mb-2">
                     <a href="{{route('vehicles.index')}}" style="background-color:#FF851B;" class="btn text-white  btn-block">

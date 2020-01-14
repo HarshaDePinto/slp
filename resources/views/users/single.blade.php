@@ -12,6 +12,8 @@
         <script src='{{asset('assets/fullcalendar/packages/daygrid/main.js')}}'></script>
         <script src='{{asset('assets/fullcalendar/packages/timegrid/main.js')}}'></script>
         <script src='{{asset('assets/fullcalendar/packages/list/main.js')}}'></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 @endsection
 
 
@@ -27,6 +29,12 @@
 
     {{--Details--}}
             <h2 class="mt-0 text-primary">{{$user->name}}</h2>
+
+            @if ($user->image)
+                <img class="mr-3 rounded" width="250" src="{{ asset('images/'.$user->image->path) }}" alt="Generic placeholder image">
+            @else
+                <img class="mr-3 rounded" width="250" src="{{ asset('images/no.png') }}" alt="Generic placeholder image">
+            @endif
 
             <h5 class="mt-0 "><span class="text-info">Email: </span>{{$user->email}}</h5>
 
@@ -56,21 +64,62 @@
 @endsection
 
 @section('content')
+<div class="container">
+    <div class="row">
+      <div class="col-md-6">
+            @if ($user->salaries()->count()!=0)
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Shopping</th>
+                        <th scope="col">Other</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($user->salaries as $salary)
+                            <tr>
 
-<div class="media">
-    @if ($user->image)
-        <img class="mr-3 rounded" width="200" src="{{ asset('images/'.$user->image->path) }}" alt="Generic placeholder image">
-    @else
-        {{'No Image'}}
-    @endif
+                                <td>{{$salary->salary}}</td>
+                                <td>{{$salary->activity}}</td>
+                                <td>{{$salary->shopping}}</td>
+                                <td>{{$salary->other}}</td>
+
+                            </tr>
+                         @endforeach
+                        <tr>
+
+                            <th>{{$salary->sum('salary')}}</th>
+                            <th>{{$salary->sum('activity')}}</th>
+                            <th>{{$salary->sum('shopping')}}</th>
+                            <th>{{$salary->sum('other')}}</th>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <th>{{$salary->sum('salary')+$salary->sum('activity')+$salary->sum('shopping')+$salary->sum('other')}}</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                    @foreach ($user->salaries as $salary)
+                    <canvas id="myChart"></canvas>
+                    @endforeach
 
 
-  <div class="media-body"> {{--calendar--}}
-
-    <div id='calendar' class="mb-5"></div>
-
+            @else
+               No salary Details Available
+            @endif
+      </div>
+      <div class="col-md-6">
+        <div id='calendar' class="mb-5"></div>
+    </div>
   </div>
-</div>
+
+
+
 
 
 @endsection
@@ -86,15 +135,14 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
           header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            left: 'prev,next',
+            right: 'dayGridMonth,listMonth'
           },
           defaultDate:new Date(),
           navLinks: true, // can click day/week names to navigate views
           businessHours: true, // display business hours
           editable: true,
-          aspectRatio: 2.5,
+          aspectRatio: 1,
           events:{!! $bookings1 !!},
         });
 
@@ -105,4 +153,42 @@
 
     </script>
 
+    {{-- CHART Script --}}
+        @if ($user->salaries()->count()!=0)
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'bar',//line,bar,horizontalBar,radar,doughnut,pie
+
+                // The data for our dataset
+                data: {
+                labels: ['Salary ','Activity','Shopping','Other' ],
+                datasets: [{
+                label: 'Salary summeryt',
+                backgroundColor: ['rgba(0,0,255)',
+                                'rgba(0,255,0)',
+                                'rgba(74, 35, 90)',
+                                'rgba(255,215,0)'],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{{$salary->sum('salary')}},{{$salary->sum('activity')}},{{$salary->sum('shopping')}},{{$salary->sum('other')}}]
+                }]
+                },
+
+                // Configuration options go here
+                options: {
+                    legend: { display: false },
+
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+
+                }
+                });
+        </script>
+        @endif
 @endsection
