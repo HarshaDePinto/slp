@@ -58,9 +58,7 @@ class MaintenancesController extends Controller
         $vehicle = Vehicle::find($maintenance->vehicle);
         $maintenance->vehicles()->save($vehicle);
         $tour = Duty::find($maintenance->tour);
-        $finance = Finance::find($tour->finance_id);
-        $finance->to_maintenance = $finance->to_maintenance + $input['amount'];
-        $finance->save();
+
         session()->flash('success', 'Maintenance Added Successfully!');
         return back();
     }

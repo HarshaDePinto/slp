@@ -56,9 +56,6 @@ class ActivityController extends Controller
         $activity->save();
 
         $tour = Duty::find($input['tour']);
-        $finance = Finance::find($tour->finance_id);
-        $finance->from_activities = $finance->from_activities + $activity->commission;
-        $finance->save();
         $activity->duties()->save($tour);
         session()->flash('success', 'Activity Added Successfully!');
         return back();

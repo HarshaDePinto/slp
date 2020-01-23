@@ -57,9 +57,7 @@ class ShopsController extends Controller
         $shop->save();
 
         $tour = Duty::find($input['tour']);
-        $finance = Finance::find($tour->finance_id);
-        $finance->from_shops = $finance->from_shops + $shop->commission;
-        $finance->save();
+
         $shop->duties()->save($tour);
         session()->flash('success', 'Shopping Added Successfully!');
         return back();

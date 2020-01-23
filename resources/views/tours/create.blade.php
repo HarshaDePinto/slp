@@ -10,12 +10,12 @@
 
     @if (isset($tour)){{-- For Edit --}}
         <a href="{{route('tours.index')}}" class="btn btn-success btn-block">
-        <i class="far fa-map"></i> Tours</a>
+        <i class="far fa-map"></i> Duties</a>
         <a href="{{route('tours.show',$tour->id)}}" class="btn btn-primary btn-block  text-white" ><i class="fas fa-backward"></i> Back to {{$tour->number}}</a>
         <a href="{{route('agreement.show',$tour->id)}}" class="btn btn-primary  btn-block  text-white" ><i class="fas fa-backward"></i> </i>Agreement</a>
 
     @else{{-- For Create --}}
-            <a href="{{route('tours.index')}}" class="btn btn-success btn-block"><i class="far fa-map"></i> Tours</a>
+            <a href="{{route('tours.index')}}" class="btn btn-success btn-block"><i class="far fa-map"></i> Duties</a>
     @endif
 
 @endsection

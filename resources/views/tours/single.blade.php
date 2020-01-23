@@ -16,10 +16,10 @@
 
 @section('option')
     <a href="{{route('tours.index')}}" class="btn btn-success btn-block">
-        <i class="far fa-map"></i> Tours</a>
+        <i class="far fa-map"></i> Duties</a>
 
     <a href="{{route('tours.edit',$tour->id)}}" class="btn btn-info btn-block  text-white" >
-        <i class="fas fa-edit"></i>Edit Tour</a>
+        <i class="fas fa-edit"></i>Edit</a>
 
     <a href="{{route('agreement.show',$tour->id)}}" class="btn btn-primary  btn-block  text-white" >
         <i class="far fa-handshake"></i> </i>Agreement</a>
@@ -37,8 +37,22 @@
         <div class="media-body">
             <div class="row mb-3">
                 <div class="col-md-8 mb-2">
-                    <h2 class="mt-0" style="color:{{$tour->color}};">{{$tour->title}}
-                    </h2>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <h2 class="mt-0 " style="color:{{$tour->color}};">{{$tour->title}}
+                            </h2>
+                        </div>
+                        <div class="col-md-2 ">
+                            <form action="{{route('tours.destroy',$tour->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger "><i class="far fa-window-close"></i></button>
+                            </form>
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <div class="col-md-4 mb-2">
                     @if ($tour->status==1)
@@ -110,8 +124,12 @@
 
                         {{$vehicle->number}}
 
-                        <div id='calendar-v' class="mb-5"></div>
-                    </a> </h5>
+
+                    </a>
+
+                </h5>
+
+                <div id='calendar-v' class="mb-5"></div>
                     @endif
 
 
@@ -150,7 +168,7 @@
                 navLinks: true, // can click day/week names to navigate views
                 businessHours: true, // display business hours
                 editable: true,
-                aspectRatio: 2,
+                aspectRatio: 1,
                 events:{!! $bookingsd !!},
                 });
 
@@ -177,7 +195,7 @@
             navLinks: true, // can click day/week names to navigate views
             businessHours: true, // display business hours
             editable: true,
-            aspectRatio: 2,
+            aspectRatio: 1,
             events:{!! $bookingsv !!},
             });
 

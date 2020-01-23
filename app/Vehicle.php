@@ -18,11 +18,11 @@ class Vehicle extends Model
 
     public function fuels()
     {
-        return $this->belongsToMany('App\Fuel');
+        return $this->belongsToMany('App\Fuel')->orderBy('created_at', 'desc');
     }
     public function maintenances()
     {
-        return $this->belongsToMany('App\Maintenance');
+        return $this->belongsToMany('App\Maintenance')->orderBy('created_at', 'desc');
     }
     protected $dates = [
         'license_exp', 'insurance_exp',

@@ -100,7 +100,17 @@ class AdminUsersController extends Controller
         $user->update($input);
 
         session()->flash('success', 'Profile updated Successfully!');
-        return back();
+
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('user_id', $user->id)->get($columns1);
+        $bookings1 = $allBookings1->toJson();
+        $duties = Duty::all();
+        return view('users.single', compact('bookings1', 'user', 'duties'));
     }
 
     /**

@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Duty extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'title', 'start', 'end', 'number', 'type', 'dollar', 'status', 'price', 'advanced', 'agreement_id', 'finance_id', 'client', 'client_email', 'author', 'color', 'user_id', 'vehicle_id',
     ];
@@ -25,7 +27,7 @@ class Duty extends Model
 
     public function driver()
     {
-        return $this->belongs('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function vehicle()

@@ -34,12 +34,19 @@
                   <ul class="navbar-nav ml-auto ">
                     @if (Route::has('login'))
                     @auth
-                       <li class="nav-item"><a class="nav-link h4 " style="color:#115278;"  href="{{ url('/home') }}">Home</a></li>
+                       <li class="nav-item"><a  class="nav-link h4 " style="color:#115278;"  href="{{ url('/home') }}">Home</a></li>
                     @else
+
                     <li class="nav-item"><a class="nav-link h4 " style="color:#115278;" href="{{ route('login') }}">Login</a></li>
+
+                    <li class="nav-item"><a target="_blank" class="nav-link h4 " style="color:#115278;" href="http://www.srilankanpersonaldrivers.com/contact.html">Contact Us</a></li>
+
+                    <li class="nav-item"><a target="_blank" class="nav-link h4 " style="color:#115278;" href="http://www.srilankanpersonaldrivers.com/tailor.html">Tailor Made Tours</a></li>
 
                     @if (Route::has('register'))
                     <li class="nav-item"><a class="nav-link h4 " style="color:#115278;" href="{{ route('register') }}">Register</a></li>
+
+
 
                     @endif
                     @endauth
@@ -63,51 +70,56 @@
        <h1>{{session()->get('danger')}}</h1>
     </div>
 @endif
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
 
-    <div class="carousel-inner">
-      <div class="carousel-item active">
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+        <div class="carousel-item active">
         <img class="d-block w-100" src="{{asset('images/image3.jpg')}}" alt="First slide">
 
         <div class="carousel-caption d-none d-md-block">
             <h1>SLPD</h1>
             <p>ADMIN PANEL</p>
           </div>
-      </div>
-      <div class="carousel-item">
+            </div>
+        <div class="carousel-item">
         <img class="d-block w-100" src="{{asset('images/image4.jpg')}}" alt="Second slide">
 
         <div class="carousel-caption d-none d-md-block">
             <h1>SLPD</h1>
             <p>ADMIN PANEL</p>
           </div>
-      </div>
-      <div class="carousel-item">
+            </div>
+        <div class="carousel-item">
         <img class="d-block w-100" src="{{asset('images/image7.jpg')}}" alt="Third slide">
 
         <div class="carousel-caption d-none d-md-block">
             <h1>SLPD</h1>
             <p>ADMIN PANEL</p>
           </div>
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-
-</div>
+            </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        </div>
 
         </div>
-    </body>
+
+        </div>
+
+
+
+</body>
 </html>

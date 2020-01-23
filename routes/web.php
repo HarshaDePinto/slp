@@ -68,6 +68,12 @@ Route::get('tours/{tour}/shops', 'TourController@shops')->name('tour.shops');
 
 Route::get('tours/{tour}/salary', 'TourController@salary')->name('tour.salary');
 
+Route::get('tours/{tour}/summary', 'TourController@summary')->name('tour.summary');
+
+Route::put('tours/{tour}/restore', 'TourController@restore')->name('tour.restore');
+
+Route::put('tours/{tour}/summery', 'TourController@summery')->name('tour.summery');
+
 //agreements
 Route::resource('agreement', 'AgreementController');
 

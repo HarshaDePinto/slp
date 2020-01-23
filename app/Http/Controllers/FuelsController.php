@@ -54,10 +54,8 @@ class FuelsController extends Controller
         $fuel = Fuel::create($input);
         $vehicle = Vehicle::find($fuel->vehicle);
         $fuel->vehicles()->save($vehicle);
-        $tour = Duty::find($fuel->tour);
-        $finance = Finance::find($tour->finance_id);
-        $finance->to_fuel = $finance->to_fuel + $input['amount'];
-        $finance->save();
+
+
         session()->flash('success', 'Fuel Added Successfully!');
         return back();
     }

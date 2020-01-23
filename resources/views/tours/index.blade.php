@@ -2,7 +2,7 @@
 
 @section('option')
     {{--Links--}}
-        <a href="{{route('tours.index')}}" class="btn btn-success btn-block"><i class="far fa-map"></i> Tours</a>
+        <a href="{{route('tours.index')}}" class="btn btn-success btn-block"><i class="far fa-map"></i> Duties</a>
 
         <a href="{{route('tours.create')}}" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Add Tour</a>
 
@@ -39,6 +39,7 @@
                                         </a>
                                     </td>
                                     <td>
+                                        <h4 class="text-info">
                                         {{-- Select Tour Agreement Date --}}
                                             @foreach ($agreements as $agreement)
                                                 @if ($agreement->id==$tour->agreement_id)
@@ -49,6 +50,7 @@
                                                     @endif
                                                 @endif
                                             @endforeach
+                                        </h4>
                                     </td>
 
                                     <td>
@@ -104,6 +106,7 @@
                                         <h4>{{$tour->title}}</h4></a>
                                     </td>
                                     <td>
+                                        <h4 class="text-info">
                                         @foreach ($agreements as $agreement)
                                             @if ($agreement->id==$tour->agreement_id)
                                                 @if ($agreement->start)
@@ -114,7 +117,7 @@
                                             @endif
                                         @endforeach
 
-
+                                    </h4>
                                     </td>
 
                                     <td>
@@ -171,6 +174,7 @@
                                         <h4>{{$tour->title}}</h4></a>
                                     </td>
                                     <td>
+                                        <h4 class="text-info">
                                         @foreach ($agreements as $agreement)
                                             @if ($agreement->id==$tour->agreement_id)
                                                 @if ($agreement->start)
@@ -181,7 +185,7 @@
                                             @endif
                                         @endforeach
 
-
+                                    </h4>
                                     </td>
 
                                     <td><form class="form-inline" action="{{route('tours.makeConfirm',$tour->id)}}" method="POST">
@@ -215,7 +219,7 @@
                 <thead>
                     <tr>
                         <th class="text-center" >Title</th>
-                        <th >Will Start</th>
+                        <th >Ended</th>
                         <th >Status</th>
                         <th >Updated By</th>
 
@@ -234,6 +238,7 @@
                                         <h4>{{$tour->title}}</h4></a>
                                     </td>
                                     <td>
+                                        <h4 class="text-info">
                                         @foreach ($agreements as $agreement)
                                             @if ($agreement->id==$tour->agreement_id)
                                                 @if ($agreement->end)
@@ -244,7 +249,7 @@
                                             @endif
                                         @endforeach
 
-
+                                    </h4>
                                     </td>
 
                                     <td><h6 class="text-info">{{'COMPLETED'}}</h6></td>
@@ -256,6 +261,58 @@
 
                                 </tr>
                             @endif
+
+                        @endforeach
+
+                    @endif
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+        {{-- Cancelled Tour --}}
+        <div id="operation5" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center" >Title</th>
+
+                        <th >Restore</th>
+                        <th >Delete</th>
+                        <th >Date</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($trashed)
+                        @foreach ($trashed as $trash)
+                                <tr>
+                                    <td>
+                                        <h4 class="text-info">{{$trash->title}}</h4>
+                                    </td>
+                                    <td>
+                                        <form action="{{route('tour.restore',$trash->id)}}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-success ">RESTORE</button>
+                                        </form>
+                                    </td>
+
+                                    <td><form action="{{route('tours.destroy',$trash->id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger ">DELETE</button>
+                                    </form></td>
+
+                                    <td>
+                                        <h4 class="text-info">{{$trash->deleted_at->diffForHumans()}}</h4>
+
+                                    </td>
+
+                                </tr>
+
 
                         @endforeach
 
@@ -292,15 +349,17 @@
                                 <td><a href="{{route('tours.show',$tour->id)}}"><h4>{{$tour->title}}</h4></a>
                                 </td>
                                 <td>
+                                    <h5 class="text-success">
                                     @foreach ($agreements as $agreement)
                                         @if ($agreement->id==$tour->agreement_id)
                                             @if ($agreement->start)
-                                                <h5>{{$agreement->start->diffForHumans()}}</h5>
+                                                {{$agreement->start->diffForHumans()}}
                                             @else
                                                 {{$tour->start}}
                                             @endif
                                         @endif
                                     @endforeach
+                                </h5>
                                 </td>
                                 <td>
                                 @if ($tour->status==1)

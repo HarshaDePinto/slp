@@ -21,12 +21,14 @@ class TourController extends Controller
      */
     public function index()
     {
+        $trashed = Duty::onlyTrashed()->get();
+
         $tours = Duty::orderBy('start', 'ASC')->get();
         $agreements = Agreement::all();
         $vehicles = Vehicle::all();
         $drivers = User::all();
 
-        return view('tours.index', compact('tours', 'agreements', 'vehicles', 'drivers'));
+        return view('tours.index', compact('tours', 'agreements', 'vehicles', 'drivers', 'trashed'));
     }
 
     /**
@@ -165,7 +167,7 @@ class TourController extends Controller
         $tour = Duty::findOrFail($id);
         $input = $request->all();
         $tour->update($input);
-        session()->flash('success', $tour->title . ' UpdatedSuccessfully!');
+        session()->flash('success', $tour->title . ' Updated Successfully!');
         return redirect(route('tours.show', $tour->id));
     }
 
@@ -177,7 +179,17 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tour = Duty::withTrashed()->where('id', $id)->firstOrFail();
+
+        if ($tour->trashed()) {
+            $tour->forceDelete();
+            session()->flash('success', ' Deleted Successfully!');
+        } else {
+            $tour->delete();
+            session()->flash('success', ' Cancelled Successfully!');
+        }
+
+        return redirect(route('tours.index'));
     }
     public function makeConfirm($id)
     {
@@ -248,7 +260,24 @@ class TourController extends Controller
     public function salary($id)
     {
         $tour = Duty::findOrFail($id);
+        $finance = Finance::find($tour->finance_id);
 
-        return view('salaries.create')->with('tour', $tour);
+
+        return view('salaries.create')->with('tour', $tour)->with('finance', $finance);
+    }
+
+    public function summary($id)
+    {
+        $tour = Duty::findOrFail($id);
+        $finance = Finance::find($tour->finance_id);
+        return view('summaries.single')->with('tour', $tour)->with('finance', $finance);
+    }
+
+    public function restore($id)
+    {
+        $trashed = Duty::withTrashed()->where('id', $id)->firstOrFail();
+        $trashed->restore();
+        session()->flash('success', ' Restored Successfully!');
+        return redirect(route('tours.index'));
     }
 }

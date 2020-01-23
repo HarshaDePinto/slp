@@ -56,25 +56,69 @@
 <div class="container">
     <div class="row">
       <div class="col-md-6">
+          <h4 class="text-primary d-inline">Fuel Details</h4>
+                {{--All Fuel--}}
+                        <button class="btn  btn-sm btn-primary float-right" onclick="show('operation1')">See All</button>
+                        <div id="operation1" style="display:none">
+                            @if ($vehicle->fuels()->count()!=0)
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Time</th>
+
+                                <th scope="col">Meter</th>
+                                <th scope="col">Liters</th>
+                                <th scope="col">Amount</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($vehicle->fuels as $fuel)
+                                    <tr>
+                                        <td>{{$fuel->author}} <br>
+                                            {{$fuel->created_at->diffForHumans()}}</td>
+
+                                        <td>{{$fuel->meter}}</td>
+                                        <td>{{$fuel->liters}}</td>
+                                        <td>{{$fuel->amount}}</td>
+
+                                    </tr>
+                                @endforeach
+
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <th>{{$fuel->sum('amount')}}</th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+                            @else
+                            No Fuel Details Available
+                            @endif
+                        </div>
             @if ($vehicle->fuels()->count()!=0)
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th scope="col">Amount</th>
+                        <th scope="col">Time</th>
+
                         <th scope="col">Meter</th>
                         <th scope="col">Liters</th>
-                        <th scope="col">Time</th>
+                        <th scope="col">Amount</th>
+
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($vehicle->fuels as $fuel)
+                        @foreach ($vehicle->fuels->take(10) as $fuel)
                             <tr>
-
-                                <td>{{$fuel->amount}}</td>
-                                <td>{{$fuel->meter}}</td>
-                                <td>{{$fuel->liters}}</td>
                                 <td>{{$fuel->author}} <br>
                                     {{$fuel->created_at->diffForHumans()}}</td>
+
+                                <td>{{$fuel->meter}}</td>
+                                <td>{{$fuel->liters}}</td>
+                                <td>{{$fuel->amount}}</td>
 
                             </tr>
                          @endforeach
@@ -91,23 +135,103 @@
             @else
                No Fuel Details Available
             @endif
+
+            <h4 class="text-primary">Maintenances Details</h4>
+                    {{--All Maintennance--}}
+                    <button class="btn  btn-sm btn-primary float-right" onclick="show('operation2')">See All</button>
+                    <div id="operation2" style="display:none">
+                        @if ($vehicle->maintenances()->count()!=0)
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Details</th>
+                                        <th scope="col">meter</th>
+                                        <th scope="col">amount</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($vehicle->maintenances as $maintenance)
+                                            <tr>
+                                                <td>{{$maintenance->author}} <br>
+                                                    {{$maintenance->created_at->diffForHumans()}}</td>
+                                                <td>{{$maintenance->details}}</td>
+                                                <td>{{$maintenance->meter}}</td>
+                                                <td>{{$maintenance->amount}}</td>
+
+
+                                            </tr>
+                                        @endforeach
+
+                                        <tr>
+                                            <td colspan="3">Total</td>
+                                            <th>{{$maintenance->sum('amount')}}</th>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+                            @else
+                            No Maintenance Details Available
+                            @endif
+                        </div>
+            @if ($vehicle->maintenances()->count()!=0)
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Details</th>
+                        <th scope="col">meter</th>
+                        <th scope="col">amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($vehicle->maintenances->take(10) as $maintenance)
+                            <tr>
+                                <td>{{$maintenance->author}} <br>
+                                    {{$maintenance->created_at->diffForHumans()}}</td>
+                                <td>{{$maintenance->details}}</td>
+                                <td>{{$maintenance->meter}}</td>
+                                <td>{{$maintenance->amount}}</td>
+
+
+                            </tr>
+                         @endforeach
+
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <th>{{$maintenance->sum('amount')}}</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            @else
+               No Maintenance Details Available
+            @endif
       </div>
       <div class="col-md-6">
+        <div id="main_place">
+        </div>
         <div id='calendar' class="mb-5"></div>
+        <h4 class="text-primary">Performance Summary</h4>
+        <canvas id="myChart"></canvas>
     </div>
   </div>
 
 
 
 
-{{-- Calendar --}}
+
 
 
 @endsection
 
 
 @section('script')
-<script>
+    <script>
 
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -115,15 +239,15 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
           header: {
-            left: 'prev,next today',
+            left: 'prev,next',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            right: 'dayGridMonth,listMonth'
           },
           defaultDate:new Date(),
           navLinks: true, // can click day/week names to navigate views
           businessHours: true, // display business hours
           editable: true,
-          aspectRatio: 2.5,
+          aspectRatio: 1,
           events:{!! $bookings1 !!},
         });
 
@@ -134,4 +258,47 @@
 
     </script>
 
+    <script>
+    function show(param_div_id) {
+      document.getElementById('main_place').innerHTML = document.getElementById(param_div_id).innerHTML;
+    }
+  </script>
+
+        @if ($vehicle->fuels()->count()!=0 && $vehicle->maintenances()->count()!=0 )
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'horizontalBar',//line,bar,horizontalBar,radar,doughnut,pie
+
+                // The data for our dataset
+                data: {
+                labels: ['Total/km ','Fuel/km ','Maintenances/km' ],
+                datasets: [{
+                label: 'Performance Summary',
+                backgroundColor: ['rgba(0,0,255)',
+                                'rgba(0,255,0)',
+                                'rgba(74, 35, 90)',
+                                'rgba(255,215,0)'],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{{($fuel->sum('amount')+$maintenance->sum('amount'))/($vehicle->cMilage-$vehicle->sMilage)}},{{$fuel->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}},{{$maintenance->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}}]
+                }]
+                },
+
+                // Configuration options go here
+                options: {
+                    legend: { display: false },
+
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+
+                }
+                });
+        </script>
+        @endif
 @endsection

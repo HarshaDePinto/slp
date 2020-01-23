@@ -100,7 +100,31 @@ class VehiclesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+        $input = $request->all();
+
+        if ($file = $request->file('image_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+
+            $image = Image::create(['path' => $name]);
+
+            $input['image_id'] = $image->id;
+        }
+
+        $vehicle->update($input);
+        session()->flash('success', 'Vehicle updated Successfully!');
+
+        $columns1 = [
+            'start AS start',
+            'end AS end',
+            'color AS color',
+            'title AS title'
+        ];
+        $allBookings1 = Duty::where('vehicle_id', $vehicle->id)->get($columns1);
+        $bookings1 = $allBookings1->toJson();
+
+        return view('vehicles.single', compact('bookings1', 'vehicle'));
     }
 
     /**

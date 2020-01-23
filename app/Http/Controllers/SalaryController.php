@@ -45,6 +45,15 @@ class SalaryController extends Controller
         $salary->duties()->save($tour);
         $driver = User::find($tour->user_id);
         $salary->users()->save($driver);
+        $finance = Finance::find($tour->finance_id);
+        $finance->to_driver = $finance->to_driver + $input['salary'];
+        $finance->from_client = $finance->from_client + $input['from_client'] * $input['drate'];
+        $finance->from_activities = $finance->from_activities + $input['activity'];
+        $finance->from_shops = $finance->from_shops + $input['shopping'];
+        $finance->to_fuel = $finance->to_fuel + $input['to_fuel'];
+        $finance->to_maintenance = $finance->to_maintenance + $input['to_maintenance'];
+        $finance->to_other = $finance->to_other + $input['to_other'];
+        $finance->save();
         session()->flash('success', 'Salary Added Successfully!');
         return back();
     }

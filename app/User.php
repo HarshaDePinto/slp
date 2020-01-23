@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function salaries()
     {
-        return $this->belongsToMany('App\Salary');
+        return $this->belongsToMany('App\Salary')->orderBy('created_at', 'desc');
     }
 }

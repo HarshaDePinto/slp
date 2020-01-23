@@ -67,7 +67,11 @@
 <div class="container">
     <div class="row">
       <div class="col-md-6">
-            @if ($user->salaries()->count()!=0)
+          <h4 class="text-primary d-inline">Income Details</h4>
+          <button class="btn  btn-sm btn-primary float-right" onclick="show('operation1')">See All</button>
+          {{--All Details--}}
+            <div id="operation1" style="display:none">
+                @if ($user->salaries()->count()!=0)
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -75,6 +79,7 @@
                         <th scope="col">Activity</th>
                         <th scope="col">Shopping</th>
                         <th scope="col">Other</th>
+                        <th scope="col">Date</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -85,6 +90,53 @@
                                 <td>{{$salary->activity}}</td>
                                 <td>{{$salary->shopping}}</td>
                                 <td>{{$salary->other}}</td>
+                                <td>{{$salary->created_at->diffForHumans()}}</td>
+
+                            </tr>
+                         @endforeach
+                        <tr>
+
+                            <th>{{$salary->sum('salary')}}</th>
+                            <th>{{$salary->sum('activity')}}</th>
+                            <th>{{$salary->sum('shopping')}}</th>
+                            <th>{{$salary->sum('other')}}</th>
+
+                        </tr>
+                        <tr>
+                            <td colspan="3">Total</td>
+                            <th>{{$salary->sum('salary')+$salary->sum('activity')+$salary->sum('shopping')+$salary->sum('other')}}</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+
+
+                    @else
+                    No salary Details Available
+                    @endif
+            </div>
+            @if ($user->salaries()->count()!=0)
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Activity</th>
+                        <th scope="col">Shopping</th>
+                        <th scope="col">Other</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($user->salaries->take(10) as $salary)
+                            <tr>
+
+                                <td>{{$salary->salary}}</td>
+                                <td>{{$salary->activity}}</td>
+                                <td>{{$salary->shopping}}</td>
+                                <td>{{$salary->other}}</td>
+                                <td>{{$salary->created_at->diffForHumans()}}</td>
 
                             </tr>
                          @endforeach
@@ -114,6 +166,8 @@
             @endif
       </div>
       <div class="col-md-6">
+        <div id="main_place">
+        </div>
         <div id='calendar' class="mb-5"></div>
     </div>
   </div>
@@ -136,6 +190,7 @@
           plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
           header: {
             left: 'prev,next',
+            center: 'title',
             right: 'dayGridMonth,listMonth'
           },
           defaultDate:new Date(),
@@ -152,6 +207,14 @@
 
 
     </script>
+
+    {{--OPTION--}}
+    <script>
+        function show(param_div_id) {
+          document.getElementById('main_place').innerHTML = document.getElementById(param_div_id).innerHTML;
+        }
+      </script>
+
 
     {{-- CHART Script --}}
         @if ($user->salaries()->count()!=0)

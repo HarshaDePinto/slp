@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('css')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 @endsection
 
 
@@ -38,54 +39,10 @@
         {{--Instruction Controller--}}
         <div class="card mb-5">
             <div class="card-header">
-               <h3 class="text-primary">Salary Controller</h3>
+
+               <h3 class="text-primary">Finance Controller</h3>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Salary</h5>
-                @if ($tour->salaries()->count()!=0)
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">Daily Salary</th>
-                            <th scope="col">Activities</th>
-                            <th scope="col">Shopping</th>
-                            <th scope="col">Other</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-
-
-
-                                @foreach ($tour->salaries as $salary)
-                                <tr>
-                                    <td >{{$salary->salary}}</td>
-                                    <td>
-                                        {{$salary->activity}}
-                                    </td>
-
-                                    <td>
-                                        {{$salary->shopping}}
-                                    </td>
-
-                                    <td>
-                                        {{$salary->other}}
-                                    </td>
-
-                                    <td>{{$salary->author}}
-                                        <br> {{$salary->updated_at->diffForHumans()}}</td>
-                                    </tr>
-                                @endforeach
-
-
-                        </tbody>
-                    </table>
-                    @else
-                    No Salary Details
-                    @endif
-
-
 
 
                         <form action="{{route('salaries.store')}}" method="POST" enctype="multipart/            form-data"class="mb-5">
@@ -105,32 +62,72 @@
                                 </div>
                             @endif
 
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="name">From Client</label>
+                                            <input type="text" class="form-control" name="from_client" value="0" required >
+                                        </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="name">Doller Rate</label>
+                                            <input type="text" class="form-control" name="drate" value="0" required >
+                                        </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="salary">Day salary</label>
+                                            <input type="text" class="form-control" value="0" name="salary" required >
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="activity">Activity Income</label>
+                                            <input type="text" class="form-control" name="activity" value="0" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="shopping">Shopping Income</label>
+                                            <input type="text" class="form-control" name="shopping" value="0" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="other">Other Income</label>
+                                            <input type="text" class="form-control" value="0" name="other" required >
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="to_fuel">Fuel Expence</label>
+                                            <input type="text" class="form-control" name="to_fuel" value="0" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="to_maintenance">Maintenance Expence</label>
+                                            <input type="text" class="form-control" name="to_maintenance" value="0" required >
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="to_other">Other Expence</label>
+                                            <input type="text" class="form-control" name="to_other" value="0" required >
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <input type="text" class="form-control" name="tour" value="{{ $tour->id}}" hidden >
-                            </div>
-
-
-
-
-                            <div class="form-group">
-                            <label class="font-weight-bold" for="salary">Day salary</label>
-                                <input type="text" class="form-control" name="salary" >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="font-weight-bold" for="activity">Activity Income</label>
-                                    <input type="text" class="form-control" name="activity" >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="font-weight-bold" for="shopping">Shopping Income</label>
-                                    <input type="text" class="form-control" name="shopping" >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="font-weight-bold" for="other">Other Income</label>
-                                    <input type="text" class="form-control" name="other" >
                             </div>
 
 
@@ -141,10 +138,21 @@
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary float-right" name="submit" value="Add">
                             </div>
-
-
-
                         </form>
+
+
+            </div>
+        </div>
+
+
+        <div class="card mb-5">
+            <div class="card-header">
+
+               <h3 class="text-primary">Income And Expence</h3>
+            </div>
+            <div class="card-body">
+
+                <canvas id="myChart"></canvas>
 
 
             </div>
@@ -153,7 +161,46 @@
 @endsection
 
 @section('script')
+@if ($finance)
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'horizontalBar',//line,bar,horizontalBar,radar,doughnut,pie
 
+                // The data for our dataset
+                data: {
+                labels: ['Client ','Activities ','Shopping','Driver','Fuel','Maintenance','Other'],
+                datasets: [{
+                label: 'Performance Summary',
+                backgroundColor: ['rgba(0,0,255)',
+                                'rgba(0,255,0)',
+                                'rgba(74, 35, 90)',
+                                'rgba(0,0,255)',
+                                'rgba(0,255,0)',
+                                'rgba(74, 35, 90)',
+                                'rgba(255,215,0)'],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{{$finance->from_client}},{{$finance->from_activities}},{{$finance->from_shops}},-{{$finance->to_driver}},-{{$finance->to_fuel}},-{{$finance->to_maintenance}},-{{$finance->to_other}}]
+                }]
+                },
+
+                // Configuration options go here
+                options: {
+                    legend: { display: false },
+
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+
+                }
+                });
+        </script>
+        @endif
 @endsection
 
 
