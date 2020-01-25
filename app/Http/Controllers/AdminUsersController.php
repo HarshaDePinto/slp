@@ -167,7 +167,10 @@ class AdminUsersController extends Controller
 
         $input['password'] = $password;
 
+        session()->flash('success', 'Password Changed Successfully!');
+
         $user->update($input);
+
 
         return redirect(route('home'));
     }

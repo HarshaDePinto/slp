@@ -46,6 +46,8 @@ Route::post('vehicles/{vehicle}/makeUnavailable', 'VehiclesController@makeUnavai
 
 Route::post('vehicles/{vehicle}/makeAvailable', 'VehiclesController@makeAvailable')->name('vehicles.makeAvailable');
 
+Route::put('vehicles/{vehicle}/restore', 'VehiclesController@restore')->name('vehicle.restore');
+
 
 
 
@@ -82,6 +84,7 @@ Route::get('/downloadPDF/{id}', 'TourController@downloadPDF');
 
 //agreements
 Route::resource('agreement', 'AgreementController');
+Route::get('/agreement_pdf/{id}', 'AgreementController@pdf');
 
 
 //Instructions
@@ -114,3 +117,11 @@ Route::resource('salaries', 'SalaryController');
 
 //Expenses
 Route::resource('expenses', 'ExpensesController');
+
+//History
+
+Route::get('history/{history}/driver', 'HistoryController@driver')->name('history.driver');
+
+Route::post('history/{history}/driver_search', 'HistoryController@driver_search')->name('history.driver_search');
+
+Route::get('/driverPDF/{id}/{start}/{end}', 'HistoryController@driverPDF');

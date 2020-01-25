@@ -6,11 +6,11 @@
 
         <a href="{{route('tours.create')}}" class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Add Tour</a>
 
-        <button style="background-color:#4A235A;" class="btn btn-block  text-white" onclick="show('operation1')">On Going</button>
-        <button style="background-color:#5B2C6F;" class="btn btn-block  text-white" onclick="show('operation2')">Confirm</button>
-        <button style="background-color:#6C3483;" class="btn btn-block  text-white" onclick="show('operation3')">Pending</button>
-        <button style="background-color:#7D3C98;" class="btn btn-block  text-white" onclick="show('operation4')">Complete</button>
-        <button style="background-color:#8E44AD;" class="btn btn-block  text-white" onclick="show('operation5')">Cancelled</button>
+        <button style="background-color:#4169E1;" class="btn btn-block  text-white" onclick="show('operation1')"><i class="fas fa-road"></i> On Going</button>
+        <button style="background-color:#006400;" class="btn btn-block  text-white" onclick="show('operation2')"><i class="far fa-check-circle"></i> Confirm</button>
+        <button style="background-color:#FF6347;" class="btn btn-block  text-white" onclick="show('operation3')"><i class="far fa-question-circle"></i> Pending</button>
+        <button style="background-color:#FF8C00;" class="btn btn-block  text-white" onclick="show('operation4')"><i class="fas fa-hourglass-end"></i> Complete</button>
+        <button style="background-color:#A52A2A;" class="btn btn-block  text-white" onclick="show('operation5')"><i class="far fa-times-circle"></i> Cancelled</button>
 
 
     {{-- OPTIONS DIV --}}
@@ -40,16 +40,10 @@
                                     </td>
                                     <td>
                                         <h4 class="text-info">
-                                        {{-- Select Tour Agreement Date --}}
-                                            @foreach ($agreements as $agreement)
-                                                @if ($agreement->id==$tour->agreement_id)
-                                                    @if ($agreement->end)
-                                                        {{$agreement->end->diffForHumans()}}
-                                                    @else
-                                                        {{$tour->end}}
-                                                    @endif
-                                                @endif
-                                            @endforeach
+
+
+                                            {{date('g:ia l jS M',strtotime($tour->end))}}
+
                                         </h4>
                                     </td>
 
@@ -107,15 +101,7 @@
                                     </td>
                                     <td>
                                         <h4 class="text-info">
-                                        @foreach ($agreements as $agreement)
-                                            @if ($agreement->id==$tour->agreement_id)
-                                                @if ($agreement->start)
-                                                    <h5>{{$agreement->start->diffForHumans()}}</h5>
-                                                @else
-                                                    {{$tour->start}}
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                            {{date('g:ia l jS M',strtotime($tour->start))}}
 
                                     </h4>
                                     </td>
@@ -175,15 +161,7 @@
                                     </td>
                                     <td>
                                         <h4 class="text-info">
-                                        @foreach ($agreements as $agreement)
-                                            @if ($agreement->id==$tour->agreement_id)
-                                                @if ($agreement->start)
-                                                    <h5>{{$agreement->start->diffForHumans()}}</h5>
-                                                @else
-                                                    {{$tour->start}}
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                            {{date('g:ia l jS M',strtotime($tour->start))}}
 
                                     </h4>
                                     </td>
@@ -239,15 +217,7 @@
                                     </td>
                                     <td>
                                         <h4 class="text-info">
-                                        @foreach ($agreements as $agreement)
-                                            @if ($agreement->id==$tour->agreement_id)
-                                                @if ($agreement->end)
-                                                    <h5>{{$agreement->end->diffForHumans()}}</h5>
-                                                @else
-                                                    {{$tour->end}}
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                            {{date('g:ia l jS M',strtotime($tour->end))}}
 
                                     </h4>
                                     </td>
@@ -350,15 +320,7 @@
                                 </td>
                                 <td>
                                     <h5 class="text-success">
-                                    @foreach ($agreements as $agreement)
-                                        @if ($agreement->id==$tour->agreement_id)
-                                            @if ($agreement->start)
-                                                {{$agreement->start->diffForHumans()}}
-                                            @else
-                                                {{$tour->start}}
-                                            @endif
-                                        @endif
-                                    @endforeach
+                                        {{date('g:ia l jS M',strtotime($tour->start))}}
                                 </h5>
                                 </td>
                                 <td>

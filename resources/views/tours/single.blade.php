@@ -18,14 +18,14 @@
     <a href="{{route('tours.index')}}" class="btn btn-success btn-block">
         <i class="far fa-map"></i> Duties</a>
 
-    <a href="{{route('tours.edit',$tour->id)}}" class="btn btn-info btn-block  text-white" >
+    <a href="{{route('tours.edit',$tour->id)}}" style="background-color:#D4AC0D;" class="btn   btn-block  text-white" >
         <i class="fas fa-edit"></i>Edit</a>
 
-    <a href="{{route('agreement.show',$tour->id)}}" class="btn btn-primary  btn-block  text-white" >
+    <a href="{{route('agreement.show',$tour->id)}}" style="background-color:#8E44AD;" class="btn   btn-block  text-white" >
         <i class="far fa-handshake"></i> </i>Agreement</a>
-    <a href="{{route('agreement.edit',$tour->id)}}" class="btn btn-info  btn-block  text-white" ><i class="fas fa-edit"></i>Edit Agreement</a>
+    <a href="{{route('agreement.edit',$tour->id)}}" style="background-color:#2471A3;" class="btn   btn-block  text-white" ><i class="fas fa-edit"></i>Edit Agreement</a>
 
-    <a href="{{route('tour.manage',$tour->id)}}" class="btn btn-primary  btn-block  text-white" ><i class="fas fa-gamepad"></i> Controller </a>
+    <a href="{{route('tour.manage',$tour->id)}}" style="background-color:#9A7D0A;" class="btn   btn-block  text-white" ><i class="fas fa-gamepad"></i> Controller </a>
 
 
 @endsection

@@ -1,55 +1,69 @@
 @extends('layouts.admin')
     {{--CSS--}}
-        @section('css')
-        @endsection
+@section('css')
+@endsection
+
 @section('option')
-    {{--ADMIN AND STAFF--}}
-        @if (Auth::user()->role_id==1 || Auth::user()->role_id==2 )
-            hjkhkhkh
-    {{--Driver--}}
-        @else
-            {{--GET TOUR OR DUTY--}}
-                @if ($tours)
-                    @foreach ($tours as $tour)
-                        {{-- Selecting Tours On That Day --}}
+        {{--ADMIN AND STAFF--}}
+            @if (Auth::user()->role_id==1 || Auth::user()->role_id==2 )
+                hjkhkhkh
+        {{--Driver--}}
+            @else
+        {{--GET TOUR OR DUTY--}}
+                    @if ($tours)
+                        @foreach ($tours as $tour)
+        {{-- Selecting Tours On That Day --}}
 
-                        @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s') && $tour->status==1 )
-                           {{-- Selecting Tours OF THe Driver --}}
-                            @if ($tour->user_id==$user->id)
-                               <h5 class="text-primary">Your Duty Today:
-                                <span class="text-danger">{{$tour->title}}</span></h5>
-                                @foreach ($vehicles as $vehicle)
-                                    @if ($tour->vehicle_id==$vehicle->id)
-                                    <h5 class="text-primary">Today You Driving:
-                                    @if ($vehicle->image)
+                            @if ($tour->start<=date('Y-m-d H:i:s') && $tour->end>=date('Y-m-d H:i:s') && $tour->status==1 )
+        {{-- Selecting Tours OF THe Driver --}}
+                @if ($tour->user_id==$user->id)
+                <h5 class="text-primary">Your Duty Today:
+                                    <span class="text-danger">{{$tour->title}}</span></h5>
 
-                                    <img class="rounded-circle mr-2" height="20" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
-                                    @else
-                                    {{'No Image'}}
-                                    @endif
-                                    <span class="text-danger">{{$vehicle->number}}</span></h5>
+        {{-- Selecting Vehicle --}}
+                @foreach ($vehicles as $vehicle)
+                @if ($tour->vehicle_id==$vehicle->id)
+                <h5 class="text-primary">Today You Driving:
+                @if ($vehicle->image)
 
-                                    @endif
+                <img class="rounded-circle mr-2" height="20" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
+                 @else
+                 <img class="rounded-circle mr-2" height="20" src="{{ asset('images/vehicle.jpg') }}" alt="No Image">
+                @endif
+                <span class="text-danger">{{$vehicle->number}}</span></h5>
 
 
-                                @endforeach
-                                <a href="{{route('locations.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Locations </a>
-                                <a href="{{route('fuels.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Fuel </a>
-                                <a href="{{route('maintenances.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Maintenances </a>
+                @endif
 
-                                <a href="{{route('activities.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities </a>
-                                <a href="{{route('shops.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shops </a>
-                            @else
+
+                @endforeach
+        {{-- Option Buttons --}}
+
+
+                    <a href="{{ url('/home') }}" style="background-color:#8E44AD;" class="btn   btn-block  text-white">
+                        <i class="fas fa-list-ul"></i> Instructions</a>
+                        <a href="{{route('locations.create')}}" style="background-color:#A0522D;" class="btn   btn-block  text-white" ><i class="fas fa-map-marker"></i>  Locations </a>
+
+                        <a href="{{route('fuels.create')}}" style="background-color:#8B4513;" class="btn   btn-block  text-white" ><i class="fas fa-gas-pump"></i> Fuel </a>
+                        <a href="{{route('maintenances.create')}}" style="background-color:#D2691E;" class="btn   btn-block  text-white" ><i class="fas fa-wrench"></i> Maintenances </a>
+                        <a href="{{route('activities.create')}}" style="background-color:#CD853F;" class="btn   btn-block  text-white" ><i class="fab fa-grunt"></i> Activities </a>
+
+                        <a href="{{route('shops.create')}}" style="background-color:#DAA520;" class="btn   btn-block  text-white" ><i class="fas fa-cart-plus"></i> Shops </a>
+                        <a href="{{route('expenses.create')}}" style="background-color:#CD5C5C;" class="btn   btn-block  text-white" ><i class="fas fa-parking"></i> Other Exp </a>
+                                @else
+
+                                @endif
 
                             @endif
 
+                        @endforeach
+
                         @endif
-
-                    @endforeach
-
                     @endif
-                @endif
 @endsection
+
+
+
 
 @section('content')
 

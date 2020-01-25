@@ -189,7 +189,6 @@ class TourController extends Controller
             $tour->delete();
             session()->flash('success', ' Cancelled Successfully!');
         }
-
         return redirect(route('tours.index'));
     }
     public function makeConfirm($id)
@@ -294,9 +293,10 @@ class TourController extends Controller
 
     public function downloadPDF($id)
     {
+
         $show = Duty::find($id);
         $pdf = PDF::loadView('pdf', compact('show'));
 
-        return $pdf->download('disney.pdf');
+        return $pdf->download('driver.pdf');
     }
 }

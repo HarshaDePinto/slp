@@ -6,23 +6,23 @@
 
     <a href="{{route('tours.show',$tour->id)}}" class="btn btn-primary btn-block  text-white" ><i class="fas fa-backward"></i> {{$tour->number}}</a>
 
-    <a style="color:{{$tour->color}};" href="{{route('agreement.show',$tour->id)}}" class="btn btn-primary  btn-block  text-white" ><i class="far fa-handshake"></i> </i>Agreement</a>
+    <a href="{{route('agreement.show',$tour->id)}}" style="background-color:#8E44AD;" class="btn   btn-block  text-white" ><i class="far fa-handshake"></i> </i>Agreement</a>
 
-    <a style="color:{{$tour->color}};" href="{{route('agreement.edit',$tour->id)}}" class="btn btn-info  btn-block  text-white" ><i class="fas fa-edit"></i>Edit Agreement</a>
+    <a  href="{{route('agreement.edit',$tour->id)}}" style="background-color:#2471A3;" class="btn   btn-block  text-white" ><i class="fas fa-edit"></i>Edit Agreement</a>
 
-    <button style="background-color:#0B5345;" class="btn btn-block  text-white" onclick="show('operation1')">Passengers</button>
+    <button style="background-color:#6A5ACD;" class="btn btn-block  text-white" onclick="show('operation1')"><i class="fas fa-users"></i> Passengers</button>
 
-    <button style="background-color:#0E6655;" class="btn btn-block  text-white" onclick="show('operation2')">Pick & Drop</button>
+    <button style="background-color:#8B008B;" class="btn btn-block  text-white" onclick="show('operation2')"><i class="fas fa-plane"></i> Pick & Drop</button>
 
-    <button style="background-color:#117A65;" class="btn btn-block  text-white" onclick="show('operation3')">Hotels</button>
+    <button style="background-color:#8A2BE2;" class="btn btn-block  text-white" onclick="show('operation3')"><i class="fas fa-utensils"></i> Hotels</button>
 
-    <button style="background-color:#138D75;" class="btn btn-block  text-white" onclick="show('operation4')">Itinerary</button>
+    <button style="background-color:#6B8E23;" class="btn btn-block  text-white" onclick="show('operation4')"><i class="fab fa-ravelry"></i> Itinerary</button>
 
-    <button style="background-color:#16A085;" class="btn btn-block  text-white" onclick="show('operation5')">Activities</button>
+    <button style="background-color:#FF8C00;" class="btn btn-block  text-white" onclick="show('operation5')"><i class="fas fa-republican"></i> <i class="fab fa-grunt"></i> Activities</button>
 
-    <button style="background-color:#45B39D;" class="btn btn-block  text-white" onclick="show('operation6')">Payment</button>
+    <button style="background-color:#191970;" class="btn btn-block  text-white" onclick="show('operation6')"><i class="fas fa-money-bill-wave"></i> Payment</button>
 
-    <button style="background-color:#73C6B6;" class="btn btn-block  text-white" onclick="show('operation7')">Condition</button>
+    <button style="background-color:#8B0000;" class="btn btn-block  text-white" onclick="show('operation7')"><i class="fas fa-exclamation-triangle"></i> Condition</button>
 
 
 
@@ -32,7 +32,10 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="mb-3">
-                            <h3>01.Passenger's Details</h3>
+                            <h3>01.Passenger's Details
+
+
+                            </h3>
                             <div style="font-size: 18px;">
                             {!!$agreement->passenger_details!!}
                             </div>
@@ -158,10 +161,15 @@
     <div id="main_place">
         {{-- Main Agreement --}}
         <div class="card mb-4">
+            <div class="card-header">
+                <a class="btn btn-sm btn-primary float-right" href="{{action('AgreementController@pdf',$agreement->id)}}">Download PDF</a>
+            </div>
             <div class="card-body">
                 {{-- 01.Passenger's Details --}}
                 <div class="mb-3">
-                    <h3>01.Passenger's Details</h3>
+                    <h3>01.Passenger's Details
+
+                    </h3>
                     <div style="font-size: 18px;">
                     {!!$agreement->passenger_details!!}
                     </div>

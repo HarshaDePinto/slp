@@ -172,6 +172,8 @@
 
                     </div>
                     <div class="col-md-3 mb-2">
+                        <a href="{{route('history.driver',$user->id)}}" class="btn btn-primary btn-block">
+                            <i class="fas fa-money-bill-wave"></i> Salary</a>
 
                     </div>
                     <div class="col-md-3 mb-2">

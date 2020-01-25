@@ -8,6 +8,7 @@ use App\User;
 use App\Vehicle;
 use App\Finance;
 use Illuminate\Http\Request;
+use PDF;
 
 class AgreementController extends Controller
 {
@@ -94,6 +95,7 @@ class AgreementController extends Controller
         $input = $request->all();
         $agreement->update($input);
 
+
         return redirect(route('tours.index'));
     }
 
@@ -106,5 +108,14 @@ class AgreementController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function pdf($id)
+    {
+
+        $agreement = Agreement::findOrFail($id);
+
+        $pdf = PDF::loadView('agreement',  compact('agreement'));
+        return $pdf->download('agreement_' . $agreement->number . '.pdf');
     }
 }

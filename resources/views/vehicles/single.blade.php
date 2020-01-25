@@ -28,26 +28,26 @@
             <img class="mr-3 rounded" width="200" src="{{ asset('images/vehicle.jpg') }}" alt="Generic placeholder image">
             @endif
 
-    <h5 class="mt-0 "><span class="text-info">Number: </span>{{$vehicle->number}}</h5>
-    <h5 class="mt-0 "><span class="text-info">Location: </span>{{$vehicle->location}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Next Service In: </span>{{$vehicle->next_service-$vehicle->cMilage}} Km</h5>
+            <h5 class="mt-0 "><span class="text-info">Number: </span>{{$vehicle->number}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Location: </span>{{$vehicle->location}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Next Service In: </span>{{$vehicle->next_service-$vehicle->cMilage}} Km</h5>
 
-      <h5 class="mt-0 "><span class="text-info">Licen Exp: </span>{{$vehicle->license_exp->diffForHumans()}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Licen Exp: </span>{{$vehicle->license_exp->diffForHumans()}}</h5>
 
-      <h5 class="mt-0 "><span class="text-info">Insurence Exp: </span>{{$vehicle->insurance_exp->diffForHumans()}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Seats: </span>{{$vehicle->seat}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Vehical Owner: </span>{{$vehicle->owner}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Meter: </span>{{$vehicle->cMilage}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Engine Oil Type: </span>{{$vehicle->engine_oil}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Gear Oil Type: </span>{{$vehicle->gear_oil}}</h5>
-      <h5 class="mt-0 "><span class="text-info">AC Modal: </span>{{$vehicle->ac}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Tyre Size: </span>{{$vehicle->tyre_size}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Tyre Air Type: </span>{{$vehicle->tyre_air}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Brake Pad Modal: </span>{{$vehicle->break_pad}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Brake Oil Type: </span>{{$vehicle->brak_oil}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Fuel Type: </span>{{$vehicle->fuel_type}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Engine Number: </span>{{$vehicle->engine_number}}</h5>
-      <h5 class="mt-0 "><span class="text-info">Chassis No: </span>{{$vehicle->chase_number}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Insurence Exp: </span>{{$vehicle->insurance_exp->diffForHumans()}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Seats: </span>{{$vehicle->seat}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Vehical Owner: </span>{{$vehicle->owner}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Meter: </span>{{$vehicle->cMilage}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Engine Oil Type: </span>{{$vehicle->engine_oil}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Gear Oil Type: </span>{{$vehicle->gear_oil}}</h5>
+            <h5 class="mt-0 "><span class="text-info">AC Modal: </span>{{$vehicle->ac}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Tyre Size: </span>{{$vehicle->tyre_size}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Tyre Air Type: </span>{{$vehicle->tyre_air}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Brake Pad Modal: </span>{{$vehicle->break_pad}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Brake Oil Type: </span>{{$vehicle->brak_oil}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Fuel Type: </span>{{$vehicle->fuel_type}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Engine Number: </span>{{$vehicle->engine_number}}</h5>
+            <h5 class="mt-0 "><span class="text-info">Chassis No: </span>{{$vehicle->chase_number}}</h5>
 
 @endsection
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditloginRequest extends FormRequest
+class DriverSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,6 @@ class EditloginRequest extends FormRequest
         return true;
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +24,8 @@ class EditloginRequest extends FormRequest
     public function rules()
     {
         return [
-            'password' => ['required', 'string', 'min:3'],
+            'start' => ['required'],
+            'end' => ['required'],
         ];
     }
 }

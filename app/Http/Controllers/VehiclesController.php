@@ -19,10 +19,11 @@ class VehiclesController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::orderBy('id', 'DESC')->get();
+        $trashed = Vehicle::onlyTrashed()->get();
         $duties = Duty::all();
 
-        return view('vehicles.index', compact('vehicles', 'duties'));
+        return view('vehicles.index', compact('vehicles', 'duties', 'trashed'));
     }
 
     /**
@@ -136,7 +137,15 @@ class VehiclesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::withTrashed()->where('id', $id)->firstOrFail();
+        if ($vehicle->trashed()) {
+            $vehicle->forceDelete();
+            session()->flash('success', ' Deleted Successfully!');
+        } else {
+            $vehicle->delete();
+            session()->flash('success', ' Trashed Successfully!');
+        }
+        return redirect(route('vehicles.index'));
     }
 
     public function makeUnavailable(Vehicle $vehicle)
@@ -156,6 +165,14 @@ class VehiclesController extends Controller
 
         session()->flash('success', 'Vehicle Make Available Successfully!');
 
+        return redirect(route('vehicles.index'));
+    }
+
+    public function restore($id)
+    {
+        $trashed = Vehicle::withTrashed()->where('id', $id)->firstOrFail();
+        $trashed->restore();
+        session()->flash('success', ' Restored Successfully!');
         return redirect(route('vehicles.index'));
     }
 }

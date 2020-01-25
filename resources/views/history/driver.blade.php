@@ -1,87 +1,23 @@
 @extends('layouts.admin')
-
-
-@section('css')
-
-    {{-- Calendar --}}
-        <link href='{{asset('assets/fullcalendar/packages/core/main.css')}}' rel='stylesheet' />
-        <link href='{{asset('assets/fullcalendar/packages/daygrid/main.css')}}' rel='stylesheet' />
-        <link href='{{asset('assets/fullcalendar/packages/timegrid/main.css')}}' rel='stylesheet' />
-        <link href='{{asset('assets/fullcalendar/packages/list/main.css')}}' rel='stylesheet' />
-        <script src='{{asset('assets/fullcalendar/packages/core/main.js')}}'></script>
-        <script src='{{asset('assets/fullcalendar/packages/interaction/main.js')}}'></script>
-        <script src='{{asset('assets/fullcalendar/packages/daygrid/main.js')}}'></script>
-        <script src='{{asset('assets/fullcalendar/packages/timegrid/main.js')}}'></script>
-        <script src='{{asset('assets/fullcalendar/packages/list/main.js')}}'></script>
-
+    {{--CSS--}}
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-@endsection
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        @section('css')
 
-
+        @endsection
 @section('option')
-    {{-- Links --}}
-        <a href="{{route('users.edit',$user->id)}}" class="btn btn-info btn-block  text-white" >
-            <i class="fas fa-edit"></i>Edit</a>
-
-        <a href="{{route('users.changePassword',$user->id)}}" class="btn btn-info btn-block  text-white" >
-            <i class="fas fa-key"></i></i>Change Password</a>
-
-
-
-    {{--Details--}}
-        <div class="row">
-        <div class="col-md-10 ">
-            <h2 class="mt-0 text-primary">{{$user->name}}
-            </h2>
-        </div>
-        <div class="col-md-2 ">
-
-        </div>
-        </div>
-
-
-            @if ($user->image)
-                <img class="mr-3 rounded" width="250" src="{{ asset('images/'.$user->image->path) }}" alt="Generic placeholder image">
-            @else
-                <img class="mr-3 rounded" width="250" src="{{ asset('images/no.png') }}" alt="Generic placeholder image">
-            @endif
-
-            <h5 class="mt-0 "><span class="text-info">Email: </span>{{$user->email}}</h5>
-
-            <h5 class="mt-0 "><span class="text-info">ID: </span>{{$user->nic}}</h5>
-
-            <h5 class="mt-0 "><span class="text-info">Users Licence: </span>{{$user->dln}}</h5>
-
-
-            <h5 class="mt-0 "><span class="text-info">Contact Details: </span></h5><h5>{!!$user->tel!!}</h5>
-
-
-            <h5 class="mt-0 "><span class="text-info">Bank Details: </span></h5><h5 class="mt-0 ">{!!$user->bank!!}</h5>
-
-
-            <h5 class="mt-0 "><span class="text-info">Complain: </span></h5><h5 class="mt-0 ">{!!$user->complain!!}</h5>
-
-
-            <h5 class="mt-0 "><span class="text-info">Note: </span></h5><h5 class="mt-0 ">{!!$user->note!!}</h5>
-
-
-            <h5 class="mt-0 "><span class="text-info">Emergency: </span></h5><h5 class="mt-0 ">{!!$user->emergency!!}</h5>
-
-            <h5 class="mt-0 "><span class="text-info">Address: </span></h5><h5 class="mt-0 ">{!!$user->address!!}</h5>
-
-
 
 @endsection
 
 @section('content')
-<div class="container">
     <div class="row">
-      <div class="col-md-6">
-          <h4 class="text-primary d-inline">Income Details</h4>
-          <button class="btn  btn-sm btn-primary float-right" onclick="show('operation1')">See All</button>
-          {{--All Details--}}
-            <div id="operation1" style="display:none">
+        <div class="col-md-6">
+            <h4 class="text-primary d-inline">Income Details</h4>
+                <button class="btn  btn-sm btn-primary float-right" onclick="show('operation1')">See All</button>
+
+                {{--All Details--}}
+                <div id="operation1" style="display:none">
                 @if ($user->salaries()->count()!=0)
                 <table class="table table-hover">
                     <thead>
@@ -119,7 +55,7 @@
                         </tr>
 
                     </tbody>
-                </table>
+                    </table>
 
 
 
@@ -128,7 +64,9 @@
                     No salary Details Available
                     @endif
             </div>
-            @if ($user->salaries()->count()!=0)
+
+            {{--First Five--}}
+                @if ($user->salaries()->count()!=0)
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -140,7 +78,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user->salaries->take(10) as $salary)
+                        @foreach ($user->salaries->take(5) as $salary)
                             <tr>
 
                                 <td>{{$salary->salary}}</td>
@@ -165,41 +103,43 @@
                         </tr>
 
                     </tbody>
-                </table>
-                <div class="mb-3">
-                <h4 class="text-primary">Salary Report</h4>
+                    </table>
 
-                <form action="{{route('history.driver_search',$user->id)}}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label class="font-weight-bold" for="start"> Start Date</label>
-                        <input type="date" class="form-control" id="start" name="start">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="font-weight-bold" for="end">End Date</label>
-                        <input type="date" class="form-control" id="end"  name="end">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-sm float-right "><i class="fas fa-money-bill-wave"></i> Repoart</button>
-                </form>
-            </div>
                     @foreach ($user->salaries as $salary)
-                    <canvas id="myChart"></canvas>
+
                     @endforeach
 
 
             @else
                No salary Details Available
             @endif
-      </div>
-      <div class="col-md-6">
-        <div id="main_place">
-        </div>
-        <div id='calendar' class="mb-5"></div>
-    </div>
-  </div>
 
 
+            </div>
+        <div class="col-md-6">
+
+
+            {{--Search--}}
+            <h4 class="text-primary">Salary Report</h4>
+
+                    <form action="{{route('history.driver_search',$user->id)}}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="start"> Start Date</label>
+                            <input type="text" class="form-control" id="start" name="start">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="end">End Date</label>
+                            <input type="text" class="form-control" id="end"  name="end">
+                        </div>
+                        <button type="submit" class="btn btn-primary "><i class="fas fa-money-bill-wave"></i> Repoart</button>
+                    </form>
+                    <div id="main_place">
+                    </div>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
 
 
 
@@ -207,34 +147,6 @@
 
 
 @section('script')
-
-    {{-- Calender Script --}}
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
-          header: {
-            left: 'prev,next',
-            center: 'title',
-            right: 'dayGridMonth,listMonth'
-          },
-          defaultDate:new Date(),
-          navLinks: true, // can click day/week names to navigate views
-          businessHours: true, // display business hours
-          editable: true,
-          aspectRatio: 1,
-          events:{!! $bookings1 !!},
-        });
-
-        calendar.render();
-      });
-
-
-
-    </script>
 
     {{--OPTION--}}
     <script>
@@ -283,6 +195,16 @@
         </script>
         @endif
 
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
+    {{--Flat Picker--}}
+        <script>
+            flatpickr('#start',{
+            enableTime:false
+            });
+            flatpickr('#end',{
+            enableTime:false
+            });
+        </script>
 
 @endsection
