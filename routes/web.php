@@ -34,6 +34,8 @@ Route::get('users/{user}/changePassword', 'AdminUsersController@changePassword')
 
 Route::put('users/{user}/editlogin', 'AdminUsersController@editlogin')->name('users.editlogin');
 
+Route::put('users/{user}/restore', 'AdminUsersController@restore')->name('user.restore');
+
 
 //vehicle
 
@@ -66,6 +68,8 @@ Route::get('tours/{tour}/activities', 'TourController@activities')->name('tour.a
 
 Route::get('tours/{tour}/shops', 'TourController@shops')->name('tour.shops');
 
+Route::get('tours/{tour}/other', 'TourController@other')->name('tour.other');
+
 Route::get('tours/{tour}/salary', 'TourController@salary')->name('tour.salary');
 
 Route::get('tours/{tour}/summary', 'TourController@summary')->name('tour.summary');
@@ -73,6 +77,8 @@ Route::get('tours/{tour}/summary', 'TourController@summary')->name('tour.summary
 Route::put('tours/{tour}/restore', 'TourController@restore')->name('tour.restore');
 
 Route::put('tours/{tour}/summery', 'TourController@summery')->name('tour.summery');
+
+Route::get('/downloadPDF/{id}', 'TourController@downloadPDF');
 
 //agreements
 Route::resource('agreement', 'AgreementController');
@@ -105,3 +111,6 @@ Route::resource('shops', 'ShopsController');
 
 //Salary
 Route::resource('salaries', 'SalaryController');
+
+//Expenses
+Route::resource('expenses', 'ExpensesController');

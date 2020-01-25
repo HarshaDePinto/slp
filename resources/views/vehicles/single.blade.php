@@ -87,7 +87,7 @@
 
                                 <tr>
                                     <td colspan="3">Total</td>
-                                    <th>{{$fuel->sum('amount')}}</th>
+                                    <th>{{$fuel->where('vehicle', '=' ,$vehicle->id)->sum('amount')}}</th>
                                 </tr>
 
                             </tbody>
@@ -125,7 +125,7 @@
 
                         <tr>
                             <td colspan="3">Total</td>
-                            <th>{{$fuel->sum('amount')}}</th>
+                            <th>{{$fuel->where('vehicle', '=' ,$vehicle->id)->sum('amount')}}</th>
                         </tr>
 
                     </tbody>
@@ -165,7 +165,7 @@
 
                                         <tr>
                                             <td colspan="3">Total</td>
-                                            <th>{{$maintenance->sum('amount')}}</th>
+                                            <th>{{$maintenance->where('vehicle', '=' ,$vehicle->id)->sum('amount')}}</th>
                                         </tr>
 
                                     </tbody>
@@ -201,7 +201,7 @@
 
                         <tr>
                             <td colspan="3">Total</td>
-                            <th>{{$maintenance->sum('amount')}}</th>
+                            <th>{{$maintenance->where('vehicle', '=' ,$vehicle->id)->sum('amount')}}</th>
                         </tr>
 
                     </tbody>
@@ -281,7 +281,7 @@
                                 'rgba(74, 35, 90)',
                                 'rgba(255,215,0)'],
                 borderColor: 'rgb(255, 99, 132)',
-                data: [{{($fuel->sum('amount')+$maintenance->sum('amount'))/($vehicle->cMilage-$vehicle->sMilage)}},{{$fuel->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}},{{$maintenance->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}}]
+                data: [{{($fuel->where('vehicle', '=' ,$vehicle->id)->sum('amount')+$maintenance->where('vehicle', '=' ,$vehicle->id)->sum('amount'))/($vehicle->cMilage-$vehicle->sMilage)}},{{$fuel->where('vehicle', '=' ,$vehicle->id)->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}},{{$maintenance->where('vehicle', '=' ,$vehicle->id)->sum('amount')/($vehicle->cMilage-$vehicle->sMilage)}}]
                 }]
                 },
 

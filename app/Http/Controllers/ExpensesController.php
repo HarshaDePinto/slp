@@ -11,8 +11,9 @@ use App\Location;
 use App\Activity;
 use App\Finance;
 use App\Shop;
+use App\Expense;
 
-class ShopsController extends Controller
+class ExpensesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +22,6 @@ class ShopsController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -31,16 +31,15 @@ class ShopsController extends Controller
      */
     public function create()
     {
-
-        $shops = Shop::all();
+        $expenses = Expense::all();
         $user = Auth::user();
         $tours = Duty::all();
         $vehicles = Vehicle::all();
-        if ($shops) {
+        if ($expenses) {
 
-            return view('shops.create', compact('shops', 'user', 'tours', 'vehicles'));
+            return view('expenses.create', compact('expenses', 'user', 'tours', 'vehicles'));
         } else {
-            return view('shops.create', compact('user', 'tours', 'vehicles'));
+            return view('expenses.create', compact('user', 'tours', 'vehicles'));
         }
     }
 
@@ -53,14 +52,11 @@ class ShopsController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $shop = Shop::create($input);
-        $shop->commission = $shop->bill * $shop->commission / 200;
-        $shop->save();
-
+        $expense = Expense::create($input);
         $tour = Duty::find($input['tour']);
 
-        $shop->duties()->save($tour);
-        session()->flash('success', 'Shopping Added Successfully!');
+        $expense->duties()->save($tour);
+        session()->flash('success', 'Expense Added Successfully!');
         return back();
     }
 

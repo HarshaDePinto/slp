@@ -28,7 +28,16 @@
 
 
     {{--Details--}}
-            <h2 class="mt-0 text-primary">{{$user->name}}</h2>
+        <div class="row">
+        <div class="col-md-10 ">
+            <h2 class="mt-0 text-primary">{{$user->name}}
+            </h2>
+        </div>
+        <div class="col-md-2 ">
+
+        </div>
+        </div>
+
 
             @if ($user->image)
                 <img class="mr-3 rounded" width="250" src="{{ asset('images/'.$user->image->path) }}" alt="Generic placeholder image">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Vehicle;
 use App\Image;
 use App\Duty;
+use App\Maintenance;
 use Carbon\Carbon;
 
 class VehiclesController extends Controller
@@ -53,7 +54,7 @@ class VehiclesController extends Controller
         }
 
         $vehicle = Vehicle::create($input);
-        $vehicle->cMilage = $input['sMilage'];
+        $vehicle->cMilage = $input['sMilage'] + 1;
         $vehicle->save();
         session()->flash('success', $vehicle->name . ' Added Successfully!');
 

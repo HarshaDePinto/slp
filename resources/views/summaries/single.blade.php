@@ -35,15 +35,199 @@
 @endsection
 
 @section('content')
-
-    <h2 class="text-primary text-center">{{$tour->title}}</h2>
         {{--Tour Summary--}}
         <div class="card mb-5">
             <div class="card-header">
-            <h3 class="text-primary">Tour Summary</h3>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        @if (isset($driver))
+                    <h5>
+                        <a href="{{route('users.show',$driver->id)}}">
+                            @if ($driver->image)
+                            <img class="rounded mr-2" width="50" src="{{ asset('images/'.$driver->image->path) }}" alt="No Image">
+                            @else
+                            <img class="mr-2 rounded" width="50" src="{{ asset('images/no.png') }}" alt="Generic placeholder image">
+                            @endif
+
+                            {{$driver->name}}
+                        </a></h5>
+                    @else
+                    NO DRIVER
+                    @endif
+                    </div>
+                    <div class="col-md-4 ">
+                        <h3 class="text-primary">{{$tour->title}}</h3>
+                    </div>
+                    <div class="col-md-4 ">
+
+                        @if (isset($vehicle))
+                    <h5 class="mt-0 "><a href="{{route('vehicles.show',$vehicle->id)}}">
+                        @if ($vehicle->image)
+                        <img class="rounded mr-2" width="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
+                        @else
+                        <img class="mr-3 rounded" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="Generic placeholder image">
+                        @endif
+
+                        {{$vehicle->number}}
+
+
+                    </a>
+
+                </h5>
+
+
+                    @endif
+                    </div>
+
+                </div>
+
             </div>
             <div class="card-body">
-                <h5 class="card-title">Income</h5>
+                <h5 class="mb-3"><strong>Date:</strong> {{Carbon\Carbon::now()->format('Y-M-d')}}</h5>
+                <h5 class="mb-3"><strong>Tour Number:</strong> {{$tour->number}}</h5>
+                <h5 class="mb-3"><strong>Driver Name:</strong> {{$driver->name}}</h5>
+                <h5 class="mb-3"><strong>Contact Number:</strong> {!!$driver->tel!!}</h5>
+                <h5 class="mb-3"><strong>Vehicle Number:</strong> {{$vehicle->number}}</h5>
+
+                <h5 class=""><strong>Duration:{{date('d',strtotime($tour->end)-strtotime($tour->start))}} days</strong></h5>
+                <h5>From {{date('g:ia \o\n l jS F Y',strtotime($tour->start))}} </h5><h5> To {{date('g:ia \o\n l jS F Y',strtotime($tour->end))}} </h5>
+
+                <h5 class="mt-3"><strong>Locations:</strong></h5>
+                    @if ($tour->locations)
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Location</th>
+                            <th scope="col">Meter Reading</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($tour->locations as $location)
+                             <tr>
+                                <td>{{$location->location}}</td>
+                                <td>{{$location->c_meter}}</td>
+                                <td>{{$location->created_at->format('Y-M-d')}}</td>
+                             </tr>
+                            @endforeach
+                            <tr>
+                                <th>Total Journey</th>
+                                <th>{{$location->c_meter-$location->s_meter}} Km</th>
+
+                             </tr>
+
+
+                        </tbody>
+                    </table>
+                    @else
+                    No Locations
+                    @endif
+
+                <h5 class="mt-3"><strong>Fuel:</strong></h5>
+                @if (isset($vehicle))
+                @if ($vehicle->fuels()->count()!=0)
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Location</th>
+                        <th scope="col">Meter</th>
+                        <th scope="col">Amount</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                            @foreach ($vehicle->fuels as $fuel)
+                            @if ($fuel->tour==$tour->id)
+                            <tr>
+                                <td >{{$fuel->location}}</td>
+                                <td>
+                                    {{$fuel->meter}}
+                                </td>
+
+                                <td>
+                                    {{$fuel->amount}}
+                                </td>
+                                </tr>
+                            @endif
+                            @endforeach
+                                <tr>
+                                    <th colspan="2">Total Amount</th>
+                                <th>@if ($fuel->where('tour', '=' ,$tour->id)->sum('amount')==$finance->to_fuel)
+                                    <span class="text-success">{{$finance->to_fuel}}</span>
+                                    @else
+                                    {{$finance->to_fuel}}(
+                                    <span class="text-danger">There are {{$finance->to_fuel-$fuel->where('tour', '=' ,$tour->id)->sum('amount')}}  different</span>)
+                                    @endif
+
+                                </tr>
+
+                    </tbody>
+                </table>
+                @else
+                No Fuel
+                @endif
+                @endif
+
+
+
+                <h5 class="mt-3"><strong>Maintenances:</strong></h5>
+                @if (isset($vehicle))
+                @if ($vehicle->maintenances()->count()!=0)
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Details</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Meter</th>
+                        <th scope="col">Amount</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach ($vehicle->maintenances as $maintenance)
+                        @if ($maintenance->tour==$tour->id)
+                        <tr>
+                            <td >{{$maintenance->details}}</td>
+                            <td >{{$maintenance->location}}</td>
+
+                            <td>
+                                {{$maintenance->meter}}
+                            </td>
+
+                            <td>
+                                {{$maintenance->amount}}
+                            </td>
+
+
+                            </tr>
+                        @endif
+
+                        @endforeach
+                                <tr>
+                                    <th colspan="2">Total Amount</th>
+                                <th>
+                                    @if ($maintenance->where('tour', '=' ,$tour->id)->sum('amount')==$finance->to_maintenance)
+                                    <span class="text-success">{{$finance->to_maintenance}}</span>
+                                    @else
+                                    {{$finance->to_maintenance}}(
+                                    <span class="text-danger">There are {{$finance->to_maintenance-$maintenance->where('tour', '=' ,$tour->id)->sum('amount')}}  different</span>)
+                                    @endif
+                                    </th>
+                                </tr>
+
+                    </tbody>
+                </table>
+                @else
+                No Maintenances
+                @endif
+                @endif
+
+
+
+
+
 
 
 
@@ -59,6 +243,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                            <td><a href="{{action('TourController@downloadPDF', $tour->id)}}">Download PDF</a></td>
 
 
                         </tbody>

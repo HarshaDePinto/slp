@@ -18,8 +18,9 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $trashed = User::onlyTrashed()->get();
+        $users = User::orderBy('id', 'DESC')->get();
+        return view('users.index', compact('users', 'trashed'));
     }
 
     /**
@@ -121,7 +122,15 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::withTrashed()->where('id', $id)->firstOrFail();
+        if ($user->trashed()) {
+            $user->forceDelete();
+            session()->flash('success', ' Deleted Successfully!');
+        } else {
+            $user->delete();
+            session()->flash('success', ' Trashed Successfully!');
+        }
+        return redirect(route('users.index'));
     }
 
     public function makeActive(User $user)
@@ -161,5 +170,13 @@ class AdminUsersController extends Controller
         $user->update($input);
 
         return redirect(route('home'));
+    }
+
+    public function restore($id)
+    {
+        $trashed = User::withTrashed()->where('id', $id)->firstOrFail();
+        $trashed->restore();
+        session()->flash('success', ' Restored Successfully!');
+        return redirect(route('users.index'));
     }
 }

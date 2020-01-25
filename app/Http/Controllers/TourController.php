@@ -10,6 +10,7 @@ use App\User;
 use App\Vehicle;
 use App\Finance;
 use App\Location;
+use PDF;
 
 
 class TourController extends Controller
@@ -257,6 +258,13 @@ class TourController extends Controller
         return view('shops.index')->with('tour', $tour);
     }
 
+    public function other($id)
+    {
+        $tour = Duty::findOrFail($id);
+
+        return view('expenses.index')->with('tour', $tour);
+    }
+
     public function salary($id)
     {
         $tour = Duty::findOrFail($id);
@@ -270,7 +278,10 @@ class TourController extends Controller
     {
         $tour = Duty::findOrFail($id);
         $finance = Finance::find($tour->finance_id);
-        return view('summaries.single')->with('tour', $tour)->with('finance', $finance);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+        $agreement = Agreement::find($tour->agreement_id);
+        $driver = User::find($tour->user_id);
+        return view('summaries.single', compact('tour', 'vehicle', 'driver', 'agreement', 'finance'));
     }
 
     public function restore($id)
@@ -279,5 +290,13 @@ class TourController extends Controller
         $trashed->restore();
         session()->flash('success', ' Restored Successfully!');
         return redirect(route('tours.index'));
+    }
+
+    public function downloadPDF($id)
+    {
+        $show = Duty::find($id);
+        $pdf = PDF::loadView('pdf', compact('show'));
+
+        return $pdf->download('disney.pdf');
     }
 }

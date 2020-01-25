@@ -151,6 +151,99 @@
                <h3 class="text-primary">Income And Expence</h3>
             </div>
             <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                            <th colspan="4">Income</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">From Client</th>
+                        <th scope="col">From Activities</th>
+                        <th scope="col">From Shopping</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                            <tr>
+                                <td >{{$finance->from_client}}</td>
+                                <td>
+                                    {{$finance->from_activities}}
+                                </td>
+
+
+                                <td>
+                                    {{$finance->from_shops}}
+                                </td>
+
+                                <td>
+                                    {{$finance->from_shops+$finance->from_client+$finance->from_activities}}
+                                </td>
+                                </tr>
+
+
+
+                    </tbody>
+                </table>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                            <th colspan="5">Expenses</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">To Driver</th>
+                        <th scope="col">To Fuel</th>
+                        <th scope="col">To Maintenance</th>
+                        <th scope="col">Other Expenses</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                            <tr>
+                                <td >{{$finance->to_driver}}</td>
+                                <td>
+                                    {{$finance->to_fuel}}
+                                </td>
+
+
+                                <td>
+                                    {{$finance->to_maintenance}}
+                                </td>
+                                <td>
+                                    {{$finance->to_other}}
+                                </td>
+
+                                <td>
+                                    {{$finance->to_driver+$finance->to_fuel+$finance->to_maintenance+$finance->to_other}}
+                                </td>
+                                </tr>
+
+
+
+                    </tbody>
+                </table>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                            <th colspan="3">Profit</th>
+                    </tr>
+                    <tr>
+                        <th colspan="3"> {{$finance->from_shops+$finance->from_client+$finance->from_activities}} - {{$finance->to_driver+$finance->to_fuel+$finance->to_maintenance+$finance->to_other}} = {{$finance->from_shops+$finance->from_client+$finance->from_activities - $finance->to_driver-$finance->to_fuel-$finance->to_maintenance-$finance->to_other}}  </th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+
+                    </tbody>
+                </table>
+
 
                 <canvas id="myChart"></canvas>
 

@@ -48,6 +48,7 @@
                                 <a href="{{route('activities.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Activities </a>
 
                                 <a href="{{route('shops.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Shops </a>
+                                <a href="{{route('expenses.create')}}" style="background-color:#FF851B;" class="btn   btn-block  text-white" > Other Exp </a>
                             @else
 
                             @endif

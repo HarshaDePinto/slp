@@ -92,9 +92,9 @@
                             @if (isset($driver))
                                 <a href="{{route('users.show',$driver->id)}}">
                                     @if ($driver->image)
-                                    <img class="rounded-circle mr-2" height="50" src="{{ asset('images/'.$driver->image->path) }}" alt="No Image">
+                                    <img class="rounded mr-2" width="50" src="{{ asset('images/'.$driver->image->path) }}" alt="No Image">
                                     @else
-                                    {{'No Image'}}
+                                    <img class="mr-2 rounded" width="50" src="{{ asset('images/no.png') }}" alt="Generic placeholder image">
                                     @endif
 
                                     {{$driver->name}}
@@ -119,7 +119,7 @@
                         @if ($vehicle->image)
                         <img class="rounded-circle mr-2" height="50" src="{{ asset('images/'.$vehicle->image->path) }}" alt="No Image">
                         @else
-                        {{'No Image'}}
+                        <img class="mr-3 rounded" width="50" src="{{ asset('images/vehicle.jpg') }}" alt="Generic placeholder image">
                         @endif
 
                         {{$vehicle->number}}
