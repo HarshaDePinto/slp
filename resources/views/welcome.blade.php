@@ -20,6 +20,85 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <style>
+            * {box-sizing: border-box;}
+
+            .container1 {
+              position: relative;
+              text-align: center;
+              color: white;
+              width: 100%;
+              max-width: 277px;
+            }
+
+            .image1 {
+              display: block;
+              width: 100%;
+              height: auto;
+            }
+
+            .overlay1 {
+
+              background: rgb(0, 0, 0);
+              background: rgba(0, 0, 0, 0.5); /* Black see-through */
+              color: #f1f1f1;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                overflow: hidden;
+                width: 100%;
+                height: 0;
+                transition: .5s ease;
+            }
+            .text {
+                color: white;
+                font-size: 14px;
+                position: absolute;
+                top: 80%;
+                left: 20%;
+                padding: 0px;
+                -webkit-transform: translate(-20%, -70%);
+                -ms-transform: translate(-20%, -70%);
+                transform: translate(-20%, -70%);
+                text-align: left;
+            }
+            .overlay{
+            background-color:rgba(0,0,0,0);
+            color:white;
+            position:absolute;
+            bottom: 8px;
+            left: 16px;
+
+            /*animate*/
+            transition:all .1s ease-in;
+            }
+
+            .container1:hover .overlay1 {
+              opacity: 1;
+              height: 100%;
+            }
+            .container1:hover .overlay {
+              opacity: 0;
+            }
+
+            .top-right {
+                position: absolute;
+                top: 8px;
+                right: 16px;
+            }
+
+            .bottom-left {
+                position: absolute;
+                bottom: 8px;
+                left: 16px;
+            }
+            #text:hover {
+                /* other rules */
+                display:none;
+            }
+            </style>
     </head>
     <body>
 
@@ -118,6 +197,140 @@
 </div>
 
 
+    <h2 class="text-center text-dark">City Tours</h2>
+    <p class="text-center text-secondary">Travel with Sri Lankan Personal Drivers</p>
+<div class="container">
+    <div class="row no-gutters">
+
+
+            <div class="container1">
+                <img src="{{ asset('images/col.gif') }}" alt="Avatar" class="image1">
+                <div class="top-right"><p> City Tours </p></div>
+                <div class="overlay1">
+                    <div class="text">
+
+                    <h2><a class="text-white mt-4"  href="http://www.srilankanpersonaldrivers.com/colombo.html">Colombo</a></h2>
+                    <p>Colombo, the capital of Sri Lanka, has a long history as a port on ancient east-west trade routes, ruled successively by the Portuguese, Dutch and British.</p>
+                    </div>
+                </div>
+                <div class="overlay"><h2 ><a class="text-white" href="http://www.srilankanpersonaldrivers.com/colombo.html">Colombo</a></h2></div>
+                </div>
+
+
+
+
+            <div class="container1">
+                <img src="{{ asset('images/Negombo.gif') }}" alt="Avatar" class="image1">
+                <div class="top-right"><p> City Tours </p></div>
+                <div class="overlay1">
+                    <div class="text">
+
+                    <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/negombo.html">Negombo</a></h2>
+                    <p>Negombo is a city on the west coast of Sri Lanka, north of the capital, Colombo. Near the waterfront, the remains of the 17th-century Dutch Fort now house a prison. </p>
+                    </div>
+                </div>
+                <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/negombo.html">Negombo</a></h2></div>
+                </div>
+
+                <div class="container1">
+                    <img src="{{ asset('images/galle.gif') }}" alt="Avatar" class="image1">
+                    <div class="top-right"><p> City Tours </p></div>
+                    <div class="overlay1">
+                        <div class="text">
+                        <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/galle.html">Galle</a></h2>
+
+                        <p >Galle is a city on the southwest coast of Sri Lanka. It’s known for Galle Fort, the fortified old city founded by Portuguese colonists in the 16th century.</p>
+                        </div>
+                    </div>
+                    <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/galle.html">Galle</a></h2></div>
+                    </div>
+
+                <div class="container1">
+                        <img src="{{ asset('images/kandy.gif') }}" alt="Avatar" class="image1">
+                        <div class="top-right"><p> City Tours </p></div>
+                        <div class="overlay1">
+                            <div class="text">
+                            <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/kandy.html">Kandy</a></h2>
+
+                            <p>The MaldivesKandy is a large city in central Sri Lanka. It's set on a plateau surrounded by mountains, which are home to tea plantations and biodiverse rainforest.</p>
+                            </div>
+                        </div>
+                        <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/kandy.html">Kandy</a></h2></div>
+                        </div>
+
+    </div>
+
+
+    <div class="row no-gutters">
+
+
+        <div class="container1">
+            <img src="{{ asset('images/anu.gif') }}" alt="Avatar" class="image1">
+            <div class="top-right"><p> City Tours </p></div>
+            <div class="overlay1">
+                <div class="text">
+
+                <h2><a class="text-white mt-4"  href="http://www.srilankanpersonaldrivers.com/anuradhapura.html">Anuradhapura</a></h2>
+                <p class="hidden-md">Anuradhapura is a major city in Sri Lanka. It is the capital city of North Central Province, Sri Lanka and the capital of Anuradhapura District.</p>
+                </div>
+            </div>
+            <div class="overlay"><h2><a class="text-white mt-4"  href="http://www.srilankanpersonaldrivers.com/anuradhapura.html">Anuradhapura</a></h2></div>
+            </div>
+
+
+
+
+        <div class="container1">
+            <img src="{{ asset('images/jaffna.gif') }}" alt="Avatar" class="image1">
+            <div class="top-right"><p> City Tours </p></div>
+            <div class="overlay1">
+                <div class="text">
+
+                <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/jaffna.html">Jaffna</a></h2>
+                <p >Jaffna is a city on the northern tip of Sri Lanka. Nallur Kandaswamy is a huge Hindu temple with golden arches and an ornate gopuram tower. </p>
+                </div>
+            </div>
+            <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/jaffna.html">Jaffna</a></h2></div>
+            </div>
+
+            <div class="container1">
+                <img src="{{ asset('images/mirissa.gif') }}" alt="Avatar" class="image1">
+                <div class="top-right"><p> City Tours </p></div>
+                <div class="overlay1">
+                    <div class="text">
+
+                    <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/Mirissa.html">Mirissa</a></h2>
+
+                    <p>Mirissa is a small town on the south coast of Sri Lanka, located in the Matara District of the Southern Province. It is approximately 150 kilometres south of Colombo and is situated at an elevation of 4 metres above sea level.</p>
+                    </div>
+                </div>
+                <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/Mirissa.html">Mirissa</a></h2></div>
+                </div>
+
+            <div class="container1">
+                    <img src="{{ asset('images/1.gif') }}" alt="Avatar" class="image1">
+                    <div class="top-right"><p> City Tours </p></div>
+                    <div class="overlay1">
+                        <div class="text">
+
+                        <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/sigiriya.html">Sigiriya</a></h2>
+
+                        <p>Sigiriya or Sinhagiri is an ancient rock fortress located in the northern Matale District near the town of Dambulla in the Central Province, Sri Lanka.</p>
+                        </div>
+                    </div>
+                    <div class="overlay"> <h2><a class="text-white mt-4" href="http://www.srilankanpersonaldrivers.com/sigiriya.html">Sigiriya</a></h2></div>
+                    </div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
 <div class="container my-5">
 
 
@@ -214,6 +427,7 @@
     </div>
 
 </div>
+
 
 
 <footer id="sticky-footer" class="fixed-bottom py-2 bg-dark text-white-50">
