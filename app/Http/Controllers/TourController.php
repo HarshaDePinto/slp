@@ -294,9 +294,15 @@ class TourController extends Controller
     public function downloadPDF($id)
     {
 
-        $show = Duty::find($id);
-        $pdf = PDF::loadView('pdf', compact('show'));
+        $tour = Duty::find($id);
+        $finance = Finance::find($tour->finance_id);
+        $vehicle = Vehicle::find($tour->vehicle_id);
+        $agreement = Agreement::find($tour->agreement_id);
+        $driver = User::find($tour->user_id);
+        $pdf = PDF::loadView('pdf', compact('tour', 'vehicle', 'driver', 'agreement', 'finance'));
 
-        return $pdf->download('driver.pdf');
+        return $pdf->download('summery_' . $tour->number . '.pdf');
+
+        //return view('pdf', compact('tour', 'vehicle', 'driver', 'agreement', 'finance'));
     }
 }

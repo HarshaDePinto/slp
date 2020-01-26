@@ -197,8 +197,8 @@
 </div>
 
 
-    <h2 class="text-center text-dark">City Tours</h2>
-    <p class="text-center text-secondary">Travel with Sri Lankan Personal Drivers</p>
+    <h2 class="text-center text-dark mt-4">City Tours</h2>
+    <h5 class="text-center text-secondary mb-4">Travel with Sri Lankan Personal Drivers</h5>
 <div class="container">
     <div class="row no-gutters">
 
@@ -332,8 +332,8 @@
 
 
 <div class="container my-5">
-
-
+    <h2 class="text-center text-dark mt-4">Day Tours</h2>
+    <h5 class="text-center text-secondary mb-4">Travel with Sri Lankan Personal Drivers</h5>
     <div class="row">
         <div class="col-md-6">
             <div class="row">

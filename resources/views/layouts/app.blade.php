@@ -26,6 +26,85 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        * {box-sizing: border-box;}
+
+        .container1 {
+          position: relative;
+          text-align: center;
+          color: white;
+          width: 100%;
+          max-width: 277px;
+        }
+
+        .image1 {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+
+        .overlay1 {
+
+          background: rgb(0, 0, 0);
+          background: rgba(0, 0, 0, 0.5); /* Black see-through */
+          color: #f1f1f1;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+        .text {
+            color: white;
+            font-size: 14px;
+            position: absolute;
+            top: 80%;
+            left: 20%;
+            padding: 0px;
+            -webkit-transform: translate(-20%, -70%);
+            -ms-transform: translate(-20%, -70%);
+            transform: translate(-20%, -70%);
+            text-align: left;
+        }
+        .overlay{
+        background-color:rgba(0,0,0,0);
+        color:white;
+        position:absolute;
+        bottom: 8px;
+        left: 16px;
+
+        /*animate*/
+        transition:all .1s ease-in;
+        }
+
+        .container1:hover .overlay1 {
+          opacity: 1;
+          height: 100%;
+        }
+        .container1:hover .overlay {
+          opacity: 0;
+        }
+
+        .top-right {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+        }
+
+        .bottom-left {
+            position: absolute;
+            bottom: 8px;
+            left: 16px;
+        }
+        #text:hover {
+            /* other rules */
+            display:none;
+        }
+        </style>
 </head>
 <body>
     <div id="app">
